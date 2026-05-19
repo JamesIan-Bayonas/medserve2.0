@@ -39,7 +39,7 @@ export default function MedicineBatchesPage() {
 
         try {
 
-            const response = await axios.get("/batches");
+            const response = await axios.get("/api/batches");
 
             setBatches(response.data);
             setFilteredBatches(response.data);
@@ -52,90 +52,118 @@ export default function MedicineBatchesPage() {
     };
 
     // ADD / UPDATE
-    const handleSubmit = async (e) => {
+   const handleSubmit = async (e) => {
 
-        e.preventDefault();
+    e.preventDefault();
 
-        try {
+    // VALIDATION
+    if (
+        !form.medicine_id ||
+        !form.batch_number ||
+        !form.date_received ||
+        !form.expiration_date ||
+        !form.quantity_received
+    ) {
+        alert("Please input all fields");
+        return;
+    }
 
-            // UPDATE
-            if (editingId) {
+    // NUMBER VALIDATION
+    if (isNaN(form.quantity_received)) {
+        alert("Quantity received must be a number");
+        return;
+    }
 
-                const response = await axios.put(
-                    `/batches/${editingId}`,
-                    {
-                        ...form,
-                        quantity_remaining:
-                            form.quantity_received,
-                    }
-                );
+    try {
 
-                const updatedBatches = batches.map(
-                    (batch) =>
-                        batch.id === editingId
-                            ? response.data.batch
-                            : batch
-                );
+        // UPDATE
+        if (editingId) {
 
-                setBatches(updatedBatches);
-                setFilteredBatches(updatedBatches);
-
-                alert("Batch updated successfully!");
-
-                setEditingId(null);
-
-            } else {
-
-                // ADD
-                const response = await axios.post(
-                    "/batches",
-                    {
-                        ...form,
-                        quantity_remaining:
-                            form.quantity_received,
-                    }
-                );
-
-                const updatedBatches = [
-                    ...batches,
-                    response.data.batch,
-                ];
-
-                setBatches(updatedBatches);
-                setFilteredBatches(updatedBatches);
-
-                alert("Medicine batch added successfully!");
-            }
-
-            // RESET FORM
-            setForm({
-                medicine_id: "",
-                batch_number: "",
-                date_received: "",
-                expiration_date: "",
-                quantity_received: "",
-            });
-
-        } catch (error) {
-
-            console.error(error);
-
-            if (error.response?.data?.errors) {
-
-                const errors =
-                    error.response.data.errors;
-
-                const firstError =
-                    Object.values(errors)[0][0];
-
-                alert(firstError);
-
-                return;
-            }
-
-            alert("Operation failed");
+            const response = await axios.put(
+               `/api/batches/${editingId}`,
+            {
+                    ...form,
+                     quantity_remaining:
+            form.quantity_received,
         }
-    };
+    );
+
+            const updatedBatches = batches.map(
+                (batch) =>
+                    batch.id === editingId
+                        ? response.data.batch
+                        : batch
+            );
+
+            setBatches(updatedBatches);
+            setFilteredBatches(updatedBatches);
+
+            alert("Batch updated successfully!");
+
+            setEditingId(null);
+
+        } else {
+
+            // ADD
+            const response = await axios.post(
+                   "/api/batches",
+              {
+                        ...form,
+                        quantity_remaining:
+                        form.quantity_received,
+              }
+         );
+
+            const updatedBatches = [
+                ...batches,
+                response.data.batch,
+            ];
+
+            setBatches(updatedBatches);
+            setFilteredBatches(updatedBatches);
+
+            alert("Medicine batch added successfully!");
+        }
+
+        // RESET FORM
+        setForm({
+            medicine_id: "",
+            batch_number: "",
+            date_received: "",
+            expiration_date: "",
+            quantity_received: "",
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        // LARAVEL VALIDATION ERRORS
+        if (error.response?.data?.errors) {
+
+            const errors =
+                error.response.data.errors;
+
+            const firstError =
+                Object.values(errors)[0][0];
+
+            alert(firstError);
+
+            return;
+        }
+
+        // OTHER ERRORS
+        if (error.response?.data?.message) {
+
+            alert(error.response.data.message);
+
+            return;
+        }
+
+        alert("Operation failed");
+    }
+};
+
 
     // SEARCH
     const handleSearch = (e) => {
@@ -811,8 +839,8 @@ export default function MedicineBatchesPage() {
                                                             try {
 
                                                                 await axios.delete(
-                                                                    `/batches/${batch.id}`
-                                                                );
+                                                                 `/api/batches/${batch.id}`
+                                                             );
 
                                                                 const updatedBatches =
                                                                     batches.filter(
