@@ -54,6 +54,7 @@ Route::get('/dashboard', function () {
     Route::post('/admin/create-staff', [StaffController::class, 'store'])
         ->middleware('admin')
         ->name('admin.store-staff');
+
 });
 
 require __DIR__.'/auth.php';
