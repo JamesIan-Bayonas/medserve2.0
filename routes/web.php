@@ -93,7 +93,7 @@ Route::middleware(['auth'])->group(function () {
     
     // Clean resource endpoints for residents and checkups management panels
     Route::resource('residents', ResidentController::class);
-    // Route::resource('checkups', CheckupController::class);
+    Route::resource('checkups', CheckupController::class);
 });
 
 require __DIR__.'/auth.php';
