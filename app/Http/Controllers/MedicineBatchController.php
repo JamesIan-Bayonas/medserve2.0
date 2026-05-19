@@ -7,36 +7,64 @@ use Illuminate\Http\Request;
 
 class MedicineBatchController extends Controller
 {
-    // FETCH ALL BATCHES
+    /*
+    |--------------------------------------------------------------------------
+    | FETCH ALL BATCHES
+    |--------------------------------------------------------------------------
+    */
     public function index()
     {
-        return MedicineBatch::all();
+        return response()->json(
+            MedicineBatch::latest()->get()
+        );
     }
 
-    // STORE NEW BATCH
+    /*
+    |--------------------------------------------------------------------------
+    | STORE NEW BATCH
+    |--------------------------------------------------------------------------
+    */
     public function store(Request $request)
     {
-        // VALIDATION
+        /*
+        |--------------------------------------------------------------------------
+        | VALIDATION
+        |--------------------------------------------------------------------------
+        */
         $request->validate([
 
-            'medicine_id' =>
+            'medicine_id' => [
+                'required'
+            ],
+
+            'batch_number' => [
                 'required',
+                'unique:medicine_batches,batch_number'
+            ],
 
-            'batch_number' =>
-                'required|unique:medicine_batches,batch_number',
+            'date_received' => [
+                'required',
+                'before_or_equal:today'
+            ],
 
-            'date_received' =>
-                'required|before_or_equal:today',
+            'expiration_date' => [
+                'required',
+                'after:today'
+            ],
 
-            'expiration_date' =>
-                'required|after:today',
-
-            'quantity_received' =>
-                'required|numeric|min:1',
+            'quantity_received' => [
+                'required',
+                'numeric',
+                'min:1'
+            ],
 
         ], [
 
-            // CUSTOM ERROR MESSAGES
+            /*
+            |--------------------------------------------------------------------------
+            | CUSTOM ERROR MESSAGES
+            |--------------------------------------------------------------------------
+            */
 
             'medicine_id.required' =>
                 'Medicine ID is required.',
@@ -69,7 +97,11 @@ class MedicineBatchController extends Controller
                 'Quantity must be at least 1.',
         ]);
 
-        // CREATE NEW BATCH
+        /*
+        |--------------------------------------------------------------------------
+        | CREATE NEW BATCH
+        |--------------------------------------------------------------------------
+        */
         $batch = MedicineBatch::create([
 
             'medicine_id' =>
@@ -87,47 +119,89 @@ class MedicineBatchController extends Controller
             'quantity_received' =>
                 $request->quantity_received,
 
-            // AUTO COMPUTE
+            /*
+            |--------------------------------------------------------------------------
+            | AUTO COMPUTE REMAINING
+            |--------------------------------------------------------------------------
+            */
             'quantity_remaining' =>
                 $request->quantity_received,
         ]);
 
-        // SUCCESS RESPONSE
+        /*
+        |--------------------------------------------------------------------------
+        | SUCCESS RESPONSE
+        |--------------------------------------------------------------------------
+        */
         return response()->json([
 
             'message' =>
                 'Medicine batch added successfully.',
 
-            'batch' => $batch
-        ]);
+            'batch' =>
+                $batch
+
+        ], 201);
     }
 
-    // UPDATE BATCH
+    /*
+    |--------------------------------------------------------------------------
+    | UPDATE BATCH
+    |--------------------------------------------------------------------------
+    */
     public function update(Request $request, $id)
     {
+        /*
+        |--------------------------------------------------------------------------
+        | FIND BATCH
+        |--------------------------------------------------------------------------
+        */
         $batch = MedicineBatch::findOrFail($id);
 
-        // VALIDATION
+        /*
+        |--------------------------------------------------------------------------
+        | VALIDATION
+        |--------------------------------------------------------------------------
+        */
         $request->validate([
 
-            'medicine_id' =>
+            'medicine_id' => [
+                'required'
+            ],
+
+            'batch_number' => [
                 'required',
+                'unique:medicine_batches,batch_number,' . $id
+            ],
 
-            'batch_number' =>
-                'required|unique:medicine_batches,batch_number,' . $id,
+            'date_received' => [
+                'required',
+                'before_or_equal:today'
+            ],
 
-            'date_received' =>
-                'required|before_or_equal:today',
+            'expiration_date' => [
+                'required',
+                'after:today'
+            ],
 
-            'expiration_date' =>
-                'required|after:today',
-
-            'quantity_received' =>
-                'required|numeric|min:1',
+            /*
+            |--------------------------------------------------------------------------
+            | ONLY REMAINING IS EDITABLE
+            |--------------------------------------------------------------------------
+            */
+            'quantity_remaining' => [
+                'required',
+                'numeric',
+                'min:0'
+            ],
 
         ], [
 
-            // CUSTOM ERROR MESSAGES
+            /*
+            |--------------------------------------------------------------------------
+            | CUSTOM ERROR MESSAGES
+            |--------------------------------------------------------------------------
+            */
 
             'medicine_id.required' =>
                 'Medicine ID is required.',
@@ -150,17 +224,21 @@ class MedicineBatchController extends Controller
             'expiration_date.after' =>
                 'Medicine is already expired.',
 
-            'quantity_received.required' =>
-                'Quantity received is required.',
+            'quantity_remaining.required' =>
+                'Quantity remaining is required.',
 
-            'quantity_received.numeric' =>
-                'Quantity must be a number.',
+            'quantity_remaining.numeric' =>
+                'Quantity remaining must be a number.',
 
-            'quantity_received.min' =>
-                'Quantity must be at least 1.',
+            'quantity_remaining.min' =>
+                'Quantity remaining cannot be negative.',
         ]);
 
-        // UPDATE DATA
+        /*
+        |--------------------------------------------------------------------------
+        | UPDATE DATA
+        |--------------------------------------------------------------------------
+        */
         $batch->update([
 
             'medicine_id' =>
@@ -175,33 +253,62 @@ class MedicineBatchController extends Controller
             'expiration_date' =>
                 $request->expiration_date,
 
-            'quantity_received' =>
-                $request->quantity_received,
-
-            // AUTO COMPUTE
+            /*
+            |--------------------------------------------------------------------------
+            | DO NOT CHANGE QUANTITY RECEIVED
+            |--------------------------------------------------------------------------
+            */
             'quantity_remaining' =>
-                $request->quantity_received,
+                $request->quantity_remaining,
         ]);
 
-        // SUCCESS RESPONSE
+        /*
+        |--------------------------------------------------------------------------
+        | SUCCESS RESPONSE
+        |--------------------------------------------------------------------------
+        */
         return response()->json([
 
             'message' =>
                 'Batch updated successfully.',
 
-            'batch' => $batch
-        ]);
+            'batch' =>
+                $batch->fresh()
+
+        ], 200);
     }
 
-    // DELETE BATCH
+    /*
+    |--------------------------------------------------------------------------
+    | DELETE BATCH
+    |--------------------------------------------------------------------------
+    */
     public function destroy($id)
     {
+        /*
+        |--------------------------------------------------------------------------
+        | FIND BATCH
+        |--------------------------------------------------------------------------
+        */
         $batch = MedicineBatch::findOrFail($id);
 
+        /*
+        |--------------------------------------------------------------------------
+        | DELETE
+        |--------------------------------------------------------------------------
+        */
         $batch->delete();
 
+        /*
+        |--------------------------------------------------------------------------
+        | SUCCESS RESPONSE
+        |--------------------------------------------------------------------------
+        */
         return response()->json([
-            'message' => 'Batch deleted successfully.'
-        ]);
+
+            'message' =>
+                'Batch deleted successfully.'
+
+        ], 200);
     }
 }
