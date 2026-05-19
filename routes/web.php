@@ -1,8 +1,10 @@
 <?php 
 
+use App\Models\MedicineBatch;
+use Carbon\Carbon;
+use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StaffController;
-use Inertia\Inertia;
  use App\Models\User;
  
 
@@ -13,42 +15,32 @@ Route::get('/', function () {
 Route::middleware(['auth'])->group(function () {
 
 Route::get('/dashboard', function () {
+        // Fetch low stock items from your SQLite table
+        $lowStock = MedicineBatch::where('quantity_remaining', '<=', 20)
+            ->where('quantity_remaining', '>', 0)
+            ->orderBy('quantity_remaining', 'asc')
+            ->get();
 
-    return Inertia::render('Dashboard', [
+        // Fetch expiring items within 30 days
+        $expiring = MedicineBatch::where('expiration_date', '<=', Carbon::now()->addDays(30))
+            ->where('quantity_remaining', '>', 0)
+            ->orderBy('expiration_date', 'asc')
+            ->get();
 
-        'totalResidents' => 0,
+        return Inertia::render('Dashboard', [
+            'totalResidents' => 0,
+            'pendingImmunizations' => 0,
+            'residents' => [],
+            'dispensedMedicines' => [],
+            'announcements' => [],
+            'alerts' => [],
+            
+            // FIX: Match the exact variable keys your React component accepts!
+            'lowStockBatches' => $lowStock,
+            'expiringBatches' => $expiring,
+        ]);
+    })->name('dashboard');
 
-        'pendingImmunizations' => 0,
-
-        'lowStockCount' => 0,
-
-        'nearExpiry' => 0,
-
-        'residents' => [],
-
-        'dispensedMedicines' => [],
-
-        'announcements' => [],
-
-        'alerts' => [
-
-            [
-                'title' => 'Low Stock Alert',
-                'message' => 'Paracetamol inventory is running low.',
-                'type' => 'warning',
-            ],
-
-            [
-                'title' => 'Immunization Schedule',
-                'message' => 'Vaccination tomorrow at 8 AM.',
-                'type' => 'info',
-            ],
-
-        ],
-
-    ]);
-
-})->name('dashboard');
     Route::get('/admin/dashboard', function () {
         return Inertia::render('Admin/Dashboard');
     })->middleware('admin')
@@ -62,6 +54,7 @@ Route::get('/dashboard', function () {
     Route::post('/admin/create-staff', [StaffController::class, 'store'])
         ->middleware('admin')
         ->name('admin.store-staff');
+
 });
 
 require __DIR__.'/auth.php';
