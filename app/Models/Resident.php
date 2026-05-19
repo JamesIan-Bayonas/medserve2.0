@@ -18,4 +18,5 @@ class Resident extends Model
     {
         return $this->hasMany(Checkup::class);
     }
+    //
 }
