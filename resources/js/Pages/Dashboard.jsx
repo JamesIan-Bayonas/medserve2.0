@@ -3,15 +3,13 @@ import { Head, Link, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 import {
     LayoutDashboard,
-    UserPlus,
     Users,
     CalendarDays,
     Package,
     Pill,
     Syringe,
     BarChart3,
-    Settings,
-    Bell
+    Settings
 } from 'lucide-react';
 
 export default function Dashboard({
@@ -26,8 +24,11 @@ export default function Dashboard({
     const { auth } = usePage().props;
     const user = auth.user;
 
-    const [showNotifications, setShowNotifications] = useState(false);
     const [search, setSearch] = useState('');
+
+    // Diagnostics loop for tracking system status
+    console.log("Low Stock Array:", lowStockBatches);
+    console.log("Expiring Array:", expiringBatches);
 
     const filteredResidents = residents.filter((resident) =>
         resident.name?.toLowerCase().includes(search.toLowerCase())
@@ -39,7 +40,7 @@ export default function Dashboard({
 
             <div className="flex min-h-screen bg-[#f5f7fb]">
                 
-                {/* SIDEBAR */}
+                {/* SIDEBAR NAVIGATION WORKSPACE */}
                 <div className="w-[250px] bg-white border-r border-gray-200 flex flex-col justify-between">
                     <div>
                         <div className="p-6">
@@ -51,74 +52,135 @@ export default function Dashboard({
                             </p>
                         </div>
 
-                        <nav className="px-4">
-                            <a href="/dashboard" className="flex items-center gap-3 px-4 py-3 rounded-xl bg-blue-50 text-blue-600 font-semibold">
-                                <LayoutDashboard size={18} />
-                                Dashboard
-                            </a>
-
-                            <div className="mt-7">
-                                <p className="text-[11px] uppercase tracking-[1px] text-gray-400 font-semibold mb-3 px-2">Residents</p>
-                                <a href="#" className="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50 transition">
-                                    <Users size={18} /> Residents List
-                                </a>
-                                <a href="#" className="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50 transition">
-                                    <CalendarDays size={18} /> Visit History
+                        <nav className="px-4 space-y-7">
+                            {/* Dashboard Core */}
+                            <div>
+                                <a
+                                    href="/dashboard"
+                                    className="flex items-center gap-3 px-4 py-3 rounded-xl bg-blue-50 text-blue-600 font-semibold"
+                                >
+                                    <LayoutDashboard size={18} />
+                                    Dashboard
                                 </a>
                             </div>
 
-                            <div className="mt-7">
-                                <p className="text-[11px] uppercase tracking-[1px] text-gray-400 font-semibold mb-3 px-2">Medicine Management</p>
-                                <a href="#" className="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50 transition">
-                                    <Package size={18} /> Inventory
+                            {/* Residents Domain */}
+                            <div>
+                                <p className="text-[11px] uppercase tracking-[1px] text-gray-400 font-semibold mb-3 px-2">
+                                    Residents
+                                </p>
+                                <a
+                                    href="#"
+                                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50 transition"
+                                >
+                                    <Users size={18} />
+                                    Residents List
                                 </a>
-                                <a href="#" className="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50 transition">
-                                    <Pill size={18} /> Dispensation
-                                </a>
-                            </div>
-
-                            <div className="mt-7">
-                                <p className="text-[11px] uppercase tracking-[1px] text-gray-400 font-semibold mb-3 px-2">Immunization</p>
-                                <a href="#" className="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50 transition">
-                                    <Syringe size={18} /> Immunization Records
-                                </a>
-                            </div>
-
-                            <div className="mt-7">
-                                <p className="text-[11px] uppercase tracking-[1px] text-gray-400 font-semibold mb-3 px-2">Reports</p>
-                                <a href="/health-reports" className="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50 transition">
-                                    <BarChart3 size={18} /> Health Reports
+                                <a
+                                    href="#"
+                                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50 transition"
+                                >
+                                    <CalendarDays size={18} />
+                                    Visit History
                                 </a>
                             </div>
 
-                            <div className="mt-7">
-                                <p className="text-[11px] uppercase tracking-[1px] text-gray-400 font-semibold mb-3 px-2">Settings</p>
-                                <a href="/settings" className="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50 transition">
-                                    <Settings size={18} /> System Settings
+                            {/* Medicine Management Domain */}
+                            <div>
+                                <p className="text-[11px] uppercase tracking-[1px] text-gray-400 font-semibold mb-3 px-2">
+                                    Medicine Management 
+                                </p>
+                                <a
+                                    href="#"
+                                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50 transition"
+                                >
+                                    <Package size={18} />
+                                    Inventory
+                                </a>
+                                <a
+                                    href="#"
+                                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50 transition"
+                                >
+                                    <Pill size={18} />
+                                    Dispensation
+                                </a>
+                            </div>
+
+                            {/* Immunization Domain */}
+                            <div>
+                                <p className="text-[11px] uppercase tracking-[1px] text-gray-400 font-semibold mb-3 px-2">
+                                    Immunization
+                                </p>
+                                <a
+                                    href="#"
+                                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50 transition"
+                                >
+                                    <Syringe size={18} />
+                                    Immunization Records
+                                </a>
+                            </div>
+
+                            {/* System Reporting Analytics */}
+                            <div>
+                                <p className="text-[11px] uppercase tracking-[1px] text-gray-400 font-semibold mb-3 px-2">
+                                    Reports
+                                </p>
+                                <a
+                                    href="/health-reports"
+                                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50 transition"
+                                >
+                                    <BarChart3 size={18} />
+                                    Health Reports
+                                </a>
+                            </div>
+
+                            {/* Utility Configuration */}
+                            <div>
+                                <p className="text-[11px] uppercase tracking-[1px] text-gray-400 font-semibold mb-3 px-2">
+                                    Settings
+                                </p>
+                                <a
+                                    href="/settings"
+                                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50 transition"
+                                >
+                                    <Settings size={18} />
+                                    System Settings
                                 </a>
                             </div>
                         </nav>
                     </div>
 
+                    {/* Admin Access Panel Guard */}
                     {user.role === 'admin' && (
                         <div className="p-4 m-4 bg-blue-100 border border-blue-200 rounded-xl shadow-sm">
-                            <h2 className="font-bold text-xl mb-1 text-blue-900">Admin Panel</h2>
-                            <p className="mb-4 text-xs text-blue-800">Only admins can create staff accounts.</p>
-                            <Link href={route('logout')} method="post" as="button" className="w-full text-center bg-red-500 hover:bg-red-600 text-white text-sm py-2 rounded-lg transition">
+                            <h2 className="font-bold text-xl mb-1 text-blue-900">
+                                Admin Panel
+                            </h2>
+                            <p className="mb-4 text-xs text-blue-800">
+                                Only admins can create staff accounts.
+                            </p>
+                            <Link
+                                href={route('logout')}
+                                method="post"
+                                as="button"
+                                className="w-full text-center bg-red-500 hover:bg-red-600 text-white text-sm py-2 rounded-lg transition"
+                            >
                                 Log Out
                             </Link>
                         </div>
                     )}
                 </div>
 
-                {/* MAIN CONTENT AREA */}
+                {/* MAIN RUNTIME METRICS VIEWPORT */}
                 <div className="flex-1 p-10">
                     <div className="flex justify-between items-center mb-8">
                         <h1 className="text-3xl font-bold text-gray-900">Dashboard Metrics Overview</h1>
                     </div>
 
+                    {/* TWO-COLUMN METRIC WIDGET GRID */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {/* Low Stock Alerts */}
+                        
+                        {/* LOW QUANTITY TRACKING COMPONENT */}
                         <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
                             <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
                                 <Package size={20} className="text-amber-500" />
@@ -145,7 +207,7 @@ export default function Dashboard({
                             )}
                         </div>
 
-                        {/* Expiring Soon Alerts */}
+                        {/* NEAR EXPIRATION ALIGNMENT PANEL */}
                         <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
                             <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
                                 <CalendarDays size={20} className="text-red-500" />
@@ -171,8 +233,10 @@ export default function Dashboard({
                                 </div>
                             )}
                         </div>
+
                     </div>
                 </div>
+
             </div>
         </AuthenticatedLayout>
     );
