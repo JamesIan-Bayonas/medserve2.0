@@ -5,8 +5,8 @@ use Carbon\Carbon;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StaffController;
- use App\Models\User;
- 
+use App\Models\User;
+use App\Http\Controllers\AdminDashboardController;
 
 Route::get('/', function () {
     return redirect('/login');
@@ -14,7 +14,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
 
-Route::get('/dashboard', function () {
+    Route::get('/dashboard', function () {
         // Fetch low stock items from your SQLite table
         $lowStock = MedicineBatch::where('quantity_remaining', '<=', 20)
             ->where('quantity_remaining', '>', 0)
