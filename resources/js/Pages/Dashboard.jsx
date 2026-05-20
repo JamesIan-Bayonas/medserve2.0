@@ -62,7 +62,7 @@ export default function Dashboard({
                     </div>
 
                     {/* ACTIVE STOCK ALERTS WORKSPACE */}
-                    <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="mt-8     grid grid-cols-1 md:grid-cols-2 gap-6">
                         
                         {/* Low Stock Alerts */}
                         <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">

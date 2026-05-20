@@ -41,10 +41,9 @@ Route::middleware(['auth'])->group(function () {
         ]);
     })->name('dashboard');
 
-    Route::get('/admin/dashboard', function () {
-        return Inertia::render('Admin/Dashboard');
-    })->middleware('admin')
-      ->name('admin.dashboard');
+    Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])
+        ->middleware('admin')
+        ->name('admin.dashboard');
 
     Route::get('/admin/create-staff', function () {
         return Inertia::render('Admin/CreateStaff');

@@ -47,7 +47,7 @@
                 All Medicines
             </h2>
 
-            <button
+            <button 
                 onclick="showAddModal()"
                 class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-3xl flex items-center gap-3 text-xl"
             >
