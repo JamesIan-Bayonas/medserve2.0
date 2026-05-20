@@ -17,11 +17,13 @@ class Medicine extends Model
         'current_stock',
         'minimum_stock',
         'purchase_price',
+        'expiration_date'
     ];
 
     protected $casts = [
         'purchase_price' => 'decimal:2',
         'current_stock'  => 'integer',
         'minimum_stock'  => 'integer',
+        'expiration_date'=> 'date'
     ];
 }
