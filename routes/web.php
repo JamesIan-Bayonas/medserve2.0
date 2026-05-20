@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Models\MedicineBatch;
+use Carbon\Carbon;
 use Inertia\Inertia;
 
 use App\Http\Controllers\AdminDashboardController;
@@ -14,6 +15,10 @@ use App\Http\Controllers\AdminDashboardController;
 // ========================================
 // DEFAULT ROUTE
 // ========================================
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\StaffController;
+use App\Models\User;
 
 Route::get('/', function () {
 
@@ -32,6 +37,7 @@ Route::middleware(['auth'])->group(function () {
     // =========================
 
     Route::get('/dashboard', function () {
+
 
         return redirect('/admin/dashboard');
 
@@ -69,5 +75,6 @@ Route::middleware(['auth'])->group(function () {
 // ========================================
 // AUTH ROUTES
 // ========================================
+
 
 require __DIR__.'/auth.php';

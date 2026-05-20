@@ -78,7 +78,6 @@
                 </div>
             </div>
         </div>
-
         <!-- SEARCH + FILTER + ADD BUTTON -->
         <div class="flex items-center justify-between mb-6">
             <div class="flex items-center gap-4 flex-1">
@@ -98,9 +97,11 @@
                 </select>
             </div>
 
-            <button onclick="showAddModal()" 
-                    class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-3xl flex items-center gap-3 text-lg shadow-lg ml-6 whitespace-nowrap">
-                <i data-lucide="plus" class="w-6 h-6"></i>
+            <button 
+                onclick="showAddModal()"
+                class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-3xl flex items-center gap-3 text-xl"
+            >
+                <i class="fa-solid fa-plus"></i>
                 Add New Medicine
             </button>
         </div>
