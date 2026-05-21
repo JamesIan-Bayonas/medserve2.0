@@ -14,9 +14,13 @@ class StaffDashboardController extends Controller
 
         $todayCheckups = 0;
 
+        $totalStaff = 0;
+
         $totalMedicines = Medicine::count();
 
         $lowStockCount = 0;
+
+        $expiringMedicines = 0;
 
         $immunizationSchedules = Immunization::count();
 
@@ -25,7 +29,10 @@ class StaffDashboardController extends Controller
             'todayCheckups',
             'totalMedicines',
             'lowStockCount',
-            'immunizationSchedules'
+            'immunizationSchedules',
+            'expiringMedicines',
+            'totalStaff'
+            
         ));
     }
 }
