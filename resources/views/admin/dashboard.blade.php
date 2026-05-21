@@ -28,8 +28,7 @@
 html,
 body{
     margin:0 !important;
-    padding:0 !important;
-    width:100%;
+    padding:0 !important;color:#2563eb;
     min-height:100vh;
     overflow-x:hidden;
 }
@@ -39,7 +38,7 @@ body{
     min-height:100vh;
 }
 body{
-    background:#f4f7fb;
+   background:#eef2f7;
     font-family:'Segoe UI', sans-serif;
     overflow-x:hidden;
     font-size:11px;
@@ -50,7 +49,7 @@ body{
 .sidebar{
     width:260px;
     height:100vh;
-    background:white;
+     background:#eef2f7;
     position:fixed;
     left:0;
     top:0;
@@ -64,6 +63,28 @@ body{
     overflow-y:auto;
 }
 
+.sidebar-menu a,
+.logout-btn{
+    transition:all 0.3s ease;
+}
+
+.sidebar-menu a:hover,
+.logout-btn:hover{
+    background:#1e3a5f;
+    color:white;
+    transform:translateX(5px);
+    box-shadow:0 6px 15px rgba(30,58,95,0.2);
+}
+
+.sidebar-logo{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:20px;
+    margin-bottom:25px;
+}
+
+
 .sidebar::-webkit-scrollbar{
     width:4px;
 }
@@ -76,8 +97,48 @@ body{
 .logo{
     font-size:32px;
     font-weight:700;
-    color:#2563eb;
+    color:#1e3a5f;
     margin-bottom:25px;
+}
+
+
+.logo-icon{
+    width:60px;
+    height:60px;
+    background:#1e3a5f;
+    border-radius:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    font-size:38px;
+    font-weight:bold;
+    flex-shrink:0;
+}
+
+.logo-text{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+
+.logo-text h1{
+    font-size:25px;
+    font-weight:800;
+    color:#1e3a5f;
+    margin:0;
+    line-height:1.1;
+}
+
+
+.logo-text p{
+    margin-top:4px;
+    font-size:10px;
+    letter-spacing:1.5px;
+    color:#1e3a5f;
+    font-weight:700;
+    white-space:nowrap;
 }
 
 .menu a{
@@ -95,12 +156,12 @@ body{
 }
 
 .menu a:hover{
-    background:#eff6ff;
-    color:#2563eb;
+   background:#e2e8f0;
+color:#1e3a5f;
 }
 
 .menu .active{
-    background:#2563eb;
+    background:#1e3a5f;
     color:white;
     box-shadow:0 4px 12px rgba(37,99,235,0.25);
 }
@@ -153,6 +214,8 @@ body{
     position:relative;
 }
 
+
+
 .search-input{
     width:270px;
     padding:12px 16px;
@@ -178,14 +241,15 @@ body{
 }
 
 .search-item{
-    padding:11px 14px;
-    cursor:pointer;
-    font-size:11px;
-    transition:0.2s;
+    display:block;
+    padding:12px;
+    color:black;
+    text-decoration:none;
+    border-radius:8px;
 }
 
 .search-item:hover{
-    background:#eff6ff;
+    background:#f1f5f9;
 }
 
 .notif-btn{
@@ -199,6 +263,12 @@ body{
     position:relative;
     cursor:pointer;
     box-shadow:0 4px 12px rgba(0,0,0,0.05);
+     transition:all 0.3s ease;
+}
+
+.notification-btn:hover{
+    transform:scale(1.08);
+    background:#f1f5f9;
 }
 
 .notif-dot{
@@ -263,22 +333,30 @@ body{
     justify-content:center;
     align-items:center;
     gap:10px;
+     transition:all 0.3s ease;
+    cursor:pointer;
+}
+
+.action-btn:hover{
+    transform:translateY(-3px);
+    opacity:0.92;
+    box-shadow:0 10px 20px rgba(0,0,0,0.12);
 }
 
 .btn-blue{
-    background:#2563eb;
+    background:#1e3a5f;
 }
 
 .btn-green{
-    background:#1f9254;
+    background:#5b8c74;
 }
 
 .btn-yellow{
-    background:#fbbc04;
+    background:#c59b42;
 }
 
 .btn-cyan{
-    background:#21b8d7;
+    background:#4f8c8d;
 }
 
 /* DASHBOARD CARDS */
@@ -288,15 +366,25 @@ body{
     grid-template-columns:repeat(3,1fr);
     gap:22px;
     margin-bottom:25px;
+
 }
 
+
 .dashboard-card{
-    background:white;
+    border:1px solid #e2e8f0;
     border-radius:20px;
     padding:22px;
     min-height:auto;
     box-shadow:0 4px 15px rgba(0,0,0,0.04);
     width:100%;
+    background:#f8fafc;
+      transition:all 0.3s ease;
+    cursor:pointer;
+}
+
+.dashboard-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 12px 25px rgba(0,0,0,0.08);
 }
 
 .card-icon{
@@ -311,28 +399,28 @@ body{
 }
 
 .blue{
-    background:#dbeafe;
-    color:#2563eb;
+    background:#dbe7f2;
+    color:#1e3a5f;
 }
 
 .green{
-    background:#dcfce7;
-    color:#16a34a;
+    background:#dfeee5;
+    color:#5b8c74;
 }
 
 .orange{
-    background:#ffedd5;
-    color:#ea580c;
+    background:#f8ead1;
+    color:#c59b42;
 }
 
 .red{
-    background:#fee2e2;
-    color:#dc2626;
+    background:#f3dddd;
+    color:#b85c5c;
 }
 
 .purple{
-    background:#ede9fe;
-    color:#7c3aed;
+    background:#ece7f5;
+    color:#6d5b98;
 }
 
 .card-title{
@@ -363,7 +451,7 @@ body{
     width:52px;
     height:52px;
     border-radius:50%;
-    background:#2563eb;
+   background:#1e3a5f;
     color:white;
     display:flex;
     justify-content:center;
@@ -376,7 +464,7 @@ body{
     width:100%;
     margin-top:14px;
     border:none;
-    background:#2563eb;
+    background:#1e3a5f;
     color:white;
     padding:14px;
     border-radius:14px;
@@ -475,6 +563,37 @@ body{
     color:#1E40AF;
 }
 
+.empty-state{
+    padding:25px;
+    text-align:center;
+    color:#64748b;
+    font-size:15px;
+    border:1px dashed #cbd5e1;
+    border-radius:12px;
+    background:#f8fafc;
+}
+
+.sidebar-link{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:15px 18px;
+    border-radius:14px;
+    text-decoration:none;
+    color:#1e3a5f;
+    transition:0.3s;
+}
+
+.sidebar-link:hover{
+    background:#1e3a5f;
+    color:white;
+}
+
+.sidebar-link.active{
+    background:#1e3a5f;
+    color:white;
+}
+
 /* RESPONSIVE */
 
 @media (max-width:1200px){
@@ -502,6 +621,8 @@ body{
     }
 
 }
+
+
     </style>
 
 </head>
@@ -514,9 +635,18 @@ body{
 
     <div>
 
-        <div class="logo">
-            MedServe
-        </div>
+       <div class="sidebar-logo">
+
+    <div class="logo-icon">
+        <i class="fa-solid fa-plus"></i>
+    </div>
+
+    <div class="logo-text">
+        <h1>MedServe</h1>
+        <p>BARANGAY NANGCA</p>
+    </div>
+
+</div>
 
         <div class="menu">
 
@@ -540,15 +670,14 @@ body{
                 Immunization
             </a>
 
-            <a href="#">
-                <i class="fa fa-capsules"></i>
-                Medicine Inventory
+                        <a href="/inventory" class="sidebar-link">
+                <i class="fa-solid fa-pills"></i>
+                <span>Medicine Inventory</span>
             </a>
-
-            <a href="#">
-                <i class="fa fa-boxes-stacked"></i>
-                Batch Tracking
-            </a>
+           <a href="/medicine-batches-page" class="sidebar-link">
+    <i class="fa-solid fa-boxes-stacked"></i>
+    <span>Batch Tracking</span>
+</a>
 
             <a href="#">
                 <i class="fa fa-hand-holding-medical"></i>
@@ -860,16 +989,9 @@ body{
             Upcoming Schedules
         </h3>
 
-        <ul class="activity-list">
-
-            <li>Baby Anne - Immunization</li>
-
-            <li>Juan Dela Cruz - Checkup</li>
-
-            <li>Maria Santos - Follow-up</li>
-
-        </ul>
-
+        <div class="empty-state">
+    No upcoming schedules.
+</div>
     </div>
 
     <!-- RECENT -->
@@ -879,19 +1001,71 @@ body{
             Recent Activities
         </h3>
 
-        <ul class="activity-list">
-
-            <li>Staff added new medicine.</li>
-
-            <li>Resident checkup recorded.</li>
-
-            <li>Immunization updated.</li>
-
-        </ul>
+       <div class="empty-state">
+    No recent activity.
+</div>
 
     </div>
 
 </div>
+
+<script>
+
+const searchData = [
+    { name: "Dashboard", link: "/admin/dashboard" },
+    { name: "Residents", link: "/residents" },
+    { name: "Checkups", link: "/checkups" },
+    { name: "Immunization", link: "/immunization" },
+    { name: "Medicine Inventory", link: "/inventory" },
+    { name: "Batch Tracking", link: "/batch-tracking" },
+    { name: "Medicine Dispensing", link: "/medicine-dispensing" },
+    { name: "Staff Management", link: "/staff-management" },
+    { name: "Reports", link: "/reports" },
+    { name: "Audit Logs", link: "/audit-logs" },
+    { name: "Settings", link: "/settings" }
+];
+
+const searchInput = document.getElementById("searchInput");
+const searchDropdown = document.getElementById("searchDropdown");
+
+searchInput.addEventListener("keyup", function () {
+
+    let value = this.value.toLowerCase();
+
+    searchDropdown.innerHTML = "";
+
+    if (value === "") {
+        searchDropdown.style.display = "none";
+        return;
+    }
+
+    let filtered = searchData.filter(item =>
+        item.name.toLowerCase().includes(value)
+    );
+
+    if (filtered.length > 0) {
+
+        searchDropdown.style.display = "block";
+
+        filtered.forEach(item => {
+
+            searchDropdown.innerHTML += `
+                <a href="${item.link}" class="search-item">
+                    ${item.name}
+                </a>
+            `;
+
+        });
+
+    } else {
+
+        searchDropdown.style.display = "none";
+
+    }
+
+});
+
+</script>
 
 
 </body>
