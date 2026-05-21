@@ -4,16 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 use App\Http\Controllers\AdminDashboardController;
-
-/*
-|--------------------------------------------------------------------------
-| WEB ROUTES
-|--------------------------------------------------------------------------
-*/
-
-// ========================================
-// DEFAULT ROUTE
-// ========================================
+use App\Http\Controllers\ResidentController;
+use App\Http\Controllers\StaffDashboardController;
 
 Route::get('/', function () {
 
@@ -21,15 +13,23 @@ Route::get('/', function () {
 
 });
 
-// ========================================
-// AUTHENTICATED ROUTES
-// ========================================
-
 Route::middleware(['auth'])->group(function () {
 
-    // =========================
-    // MAIN DASHBOARD
-    // =========================
+    /*
+    |--------------------------------------------------------------------------
+    | STAFF DASHBOARD
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/staff/dashboard', [StaffDashboardController::class, 'index'])
+        ->name('staff.dashboard');
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | ADMIN DASHBOARD
+    |--------------------------------------------------------------------------
+    */
 
     Route::get('/dashboard', function () {
 
@@ -37,16 +37,15 @@ Route::middleware(['auth'])->group(function () {
 
     })->name('dashboard');
 
-    // =========================
-    // ADMIN DASHBOARD
-    // =========================
-
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])
         ->name('admin.dashboard');
 
-    // =========================
-    // MEDICINE INVENTORY PAGE
-    // =========================
+
+    /*
+    |--------------------------------------------------------------------------
+    | INVENTORY
+    |--------------------------------------------------------------------------
+    */
 
     Route::get('/inventory', function () {
 
@@ -54,9 +53,12 @@ Route::middleware(['auth'])->group(function () {
 
     })->name('inventory');
 
-    // =========================
-    // MEDICINE BATCH PAGE
-    // =========================
+
+    /*
+    |--------------------------------------------------------------------------
+    | MEDICINE BATCHES
+    |--------------------------------------------------------------------------
+    */
 
     Route::get('/medicine-batches-page', function () {
 
@@ -64,10 +66,15 @@ Route::middleware(['auth'])->group(function () {
 
     })->name('medicine.batches');
 
-});
 
-// ========================================
-// AUTH ROUTES
-// ========================================
+    /*
+    |--------------------------------------------------------------------------
+    | RESIDENTS
+    |--------------------------------------------------------------------------
+    */
+
+    Route::resource('residents', ResidentController::class);
+
+});
 
 require __DIR__.'/auth.php';
