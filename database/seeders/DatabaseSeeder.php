@@ -12,11 +12,20 @@ class DatabaseSeeder extends Seeder
 
     public function run(): void
     {
-        // Create Admin User
+        // Admin User
         User::factory()->create([
             'name' => 'System Administrator',
             'email' => 'admin@medserve.com',
             'password' => bcrypt('password'),
+            'role' => 'admin',
+        ]);
+
+        // Staff User
+        User::factory()->create([
+            'name' => 'Staff',
+            'email' => 'staff@medserve.com',
+            'password' => bcrypt('password'),
+            'role' => 'staff',
         ]);
 
         // Seed Medicines
