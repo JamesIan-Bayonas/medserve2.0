@@ -32,49 +32,25 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
 
-    // =========================
-    // MAIN DASHBOARD
-    // =========================
-
+    // DASHBOARD & ALERTS
     Route::get('/dashboard', function () {
-
-
-        return redirect('/admin/dashboard');
-
+        $lowStock = MedicineBatch::where('quantity_remaining', '<=', 20)
+            ->where('quantity_remaining', '>', 0)
+            ->get();
+        $expiring = MedicineBatch::where('expiration_date', '<=', Carbon::now()->addDays(30))
+            ->get();
+        return Inertia::render('Dashboard', [
+            'lowStockBatches' => $lowStock,
+            'expiringBatches' => $expiring,
+        ]);
     })->name('dashboard');
 
-    // =========================
-    // ADMIN DASHBOARD
-    // =========================
-
-    Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])
-        ->name('admin.dashboard');
-
-    // =========================
-    // MEDICINE INVENTORY PAGE
-    // =========================
-
-    Route::get('/inventory', function () {
-
-        return view('inventory');
-
-    })->name('inventory');
-
-    // =========================
-    // MEDICINE BATCH PAGE
-    // =========================
-
-    Route::get('/medicine-batches-page', function () {
-
-        return Inertia::render('MedicineBatches');
-
-    })->name('medicine.batches');
-
+    // ADMIN
+    Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+    
+    // INVENTORY
+    Route::get('/inventory', function () { return view('inventory'); })->name('inventory');
+    Route::get('/medicine-batches-page', function () { return Inertia::render('MedicineBatches'); })->name('medicine.batches');
 });
-
-// ========================================
-// AUTH ROUTES
-// ========================================
-
 
 require __DIR__.'/auth.php';

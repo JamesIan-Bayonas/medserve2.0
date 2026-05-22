@@ -97,11 +97,28 @@
                 </select>
             </div>
 
-            <button 
-                onclick="showAddModal()"
-                class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-3xl flex items-center gap-3 text-xl"
-            >
-                <i class="fa-solid fa-plus"></i>
+        <!-- SEARCH + FILTER + ADD BUTTON -->
+        <div class="flex items-center justify-between mb-6">
+            <div class="flex items-center gap-4 flex-1">
+                <div class="flex-1 relative">
+                    <input type="text" id="searchInput" placeholder="Search medicine name or code..." 
+                           onkeyup="loadMedicines()"
+                           class="w-full border border-gray-300 rounded-3xl px-6 py-4 pl-12 focus:border-blue-500 outline-none text-lg">
+                    <i data-lucide="search" class="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5"></i>
+                </div>
+                <select id="categoryFilter" onchange="loadMedicines()" 
+                        class="border border-gray-300 rounded-3xl px-6 py-4 focus:border-blue-500 outline-none text-lg">
+                    <option value="">All Categories</option>
+                    <option value="Cardiovascular">Cardiovascular</option>
+                    <option value="Analgesic">Analgesic</option>
+                    <option value="Antibiotic">Antibiotic</option>
+                    <option value="Pediatric">Pediatric</option>
+                </select>
+            </div>
+
+            <button onclick="showAddModal()" 
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-3xl flex items-center gap-3 text-lg shadow-lg ml-6 whitespace-nowrap">
+                <i data-lucide="plus" class="w-6 h-6"></i>
                 Add New Medicine
             </button>
         </div>
