@@ -39,7 +39,7 @@ body{
     min-height:100vh;
 }
 body{
-    background:#f4f7fb;
+    background:#eef2f7;
     font-family:'Segoe UI', sans-serif;
     overflow-x:hidden;
     font-size:11px;
@@ -76,7 +76,7 @@ body{
 .logo{
     font-size:32px;
     font-weight:700;
-    color:#2563eb;
+    color:#1e3a5f;
     margin-bottom:25px;
 }
 
@@ -95,12 +95,12 @@ body{
 }
 
 .menu a:hover{
-    background:#eff6ff;
-    color:#2563eb;
+   background:#e2e8f0;
+color:#1e3a5f;
 }
 
 .menu .active{
-    background:#2563eb;
+   background:#1e3a5f;
     color:white;
     box-shadow:0 4px 12px rgba(37,99,235,0.25);
 }
@@ -145,48 +145,52 @@ body{
 .top-right{
     display:flex;
     align-items:center;
-    gap:14px;
-    position:relative;
+    gap:18px;
 }
 
-.search-box{
+.search-container{
     position:relative;
+    z-index:99999;
 }
 
 .search-input{
-    width:270px;
-    padding:12px 16px;
+    width:300px;
+    height:48px;
     border:none;
+    outline:none;
+    padding:0 20px;
     border-radius:14px;
     background:white;
-    box-shadow:0 4px 12px rgba(0,0,0,0.05);
-    outline:none;
-    font-size:11px;
+    font-size:14px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.04);
 }
 
 .search-dropdown{
     position:absolute;
-    top:50px;
+    top:58px;
     left:0;
     width:100%;
     background:white;
-    border-radius:12px;
+    border-radius:14px;
     overflow:hidden;
+    box-shadow:0 8px 24px rgba(0,0,0,0.08);
     display:none;
-    box-shadow:0 6px 18px rgba(0,0,0,0.08);
-    z-index:999;
+    z-index:1000;
+    pointer-events:auto;
+z-index:99999;
 }
 
 .search-item{
-    padding:11px 14px;
+    padding:14px 18px;
     cursor:pointer;
-    font-size:11px;
     transition:0.2s;
+    font-size:14px;
 }
 
 .search-item:hover{
-    background:#eff6ff;
+    background:#eef2f7;
 }
+
 
 .notif-btn{
     width:50px;
@@ -266,19 +270,19 @@ body{
 }
 
 .btn-blue{
-    background:#2563eb;
+    background:#1e3a5f;
 }
 
 .btn-green{
-    background:#1f9254;
+    background:#5b8c74;
 }
 
 .btn-yellow{
-    background:#fbbc04;
+    background:#c59b42;
 }
 
 .btn-cyan{
-    background:#21b8d7;
+    background:#4f8c8d;
 }
 
 /* DASHBOARD CARDS */
@@ -291,12 +295,14 @@ body{
 }
 
 .dashboard-card{
-    background:white;
+    border:1px solid #e2e8f0;
     border-radius:20px;
     padding:22px;
     min-height:auto;
     box-shadow:0 4px 15px rgba(0,0,0,0.04);
     width:100%;
+    position:relative;
+z-index:1;
 }
 
 .card-icon{
@@ -311,28 +317,27 @@ body{
 }
 
 .blue{
-    background:#dbeafe;
-    color:#2563eb;
+    background:#dbe7f2;
+    color:#1e3a5f;
 }
-
 .green{
-    background:#dcfce7;
-    color:#16a34a;
+    background:#dfeee5;
+    color:#5b8c74;
 }
 
 .orange{
-    background:#ffedd5;
-    color:#ea580c;
+    background:#f8ead1;
+    color:#c59b42;
 }
 
 .red{
-    background:#fee2e2;
-    color:#dc2626;
+    background:#f3dddd;
+    color:#b85c5c;
 }
 
 .purple{
-    background:#ede9fe;
-    color:#7c3aed;
+    background:#ece7f5;
+    color:#6d5b98;
 }
 
 .card-title{
@@ -363,7 +368,7 @@ body{
     width:52px;
     height:52px;
     border-radius:50%;
-    background:#2563eb;
+   background:#1e3a5f;
     color:white;
     display:flex;
     justify-content:center;
@@ -376,7 +381,7 @@ body{
     width:100%;
     margin-top:14px;
     border:none;
-    background:#2563eb;
+    background:#1e3a5f;
     color:white;
     padding:14px;
     border-radius:14px;
@@ -401,12 +406,14 @@ body{
 }
 
 .bottom-grid .dashboard-card{
-    background:#ffffff;
+  background:#f4f7fb;
     border-radius:20px;
     padding:22px;
     width:100%;
     min-width:0;
     box-shadow:0 4px 15px rgba(0,0,0,0.04);
+    border:1px solid rgba(255,255,255,0.5);
+backdrop-filter:blur(6px);
 }
 
 /* SECTION TITLE */
@@ -550,29 +557,9 @@ body{
                 Batch Tracking
             </a>
 
-           <a href="/medicine-dispensing">
-    <i class="fa fa-hand-holding-medical"></i>
-    Medicine Dispensing
-    </a>
-
             <a href="#">
-                <i class="fa fa-user-doctor"></i>
-                Staff Management
-            </a>
-
-            <a href="#">
-                <i class="fa fa-chart-pie"></i>
-                Reports
-            </a>
-
-            <a href="#">
-                <i class="fa fa-clock-rotate-left"></i>
-                Audit Logs
-            </a>
-
-            <a href="#">
-                <i class="fa fa-gear"></i>
-                Settings
+                <i class="fa fa-hand-holding-medical"></i>
+                Medicine Dispensing
             </a>
 
         </div>
@@ -591,23 +578,28 @@ body{
 
             <div>
                 <div style="font-weight:700;font-size:11px;">
-                    Admin
+                    Staff
                 </div>
 
                 <div style="font-size:11px;color:#64748b;">
-                    Barangay Captain
+                   Barangay Health Worker
                 </div>
             </div>
 
         </div>
 
-        <form action="{{ route('logout') }}" method="POST">
+       <form method="POST" action="{{ route('logout') }}">
+
     @csrf
 
     <button type="submit" class="logout-btn">
+
         <i class="fa fa-right-from-bracket"></i>
+
         Logout
+
     </button>
+
 </form>
 
     </div>
@@ -623,28 +615,35 @@ body{
 <div class="top-section">
 
     <div class="page-title">
-        <h1>MedServe Administration</h1>
+        <h1>Staff Dashboard</h1>
         <p>Barangay Health Center Management System</p>
     </div>
 
     <div class="top-right">
 
-        <div class="search-box">
-            <input type="text"
-                   id="searchInput"
-                   class="search-input"
-                   placeholder="Search...">
+       <div class="top-right">
 
-            <div class="search-dropdown"
-                 id="searchDropdown">
-            </div>
-        </div>
+    <div class="search-container">
+
+        <input
+            type="text"
+            id="searchInput"
+            class="search-input"
+            placeholder="Search..."
+            autocomplete="off"
+        >
+
+        <div id="searchDropdown" class="search-dropdown"></div>
+
+    </div>
+
+</div>
 
         <div class="notif-btn"
              onclick="toggleNotifications()">
 
             <i class="fa fa-bell"
-               style="color:#2563eb;font-size:20px;"></i>
+               style="color:#1e3a5f;font-size:20px;"></i>
 
             <div class="notif-dot"></div>
         </div>
@@ -660,9 +659,6 @@ body{
                 {{ $lowStockCount }} low stock medicines detected.
             </div>
 
-            <div class="notification-item notif-red">
-                {{ $expiringMedicines }} medicines expiring soon.
-            </div>
 
             <div class="notification-item notif-blue">
                 {{ $immunizationSchedules }} immunization schedules today.
@@ -677,7 +673,6 @@ body{
 
 
         <!-- QUICK ACTIONS -->
-
 <div class="quick-actions">
 
     <button class="action-btn btn-blue">
@@ -714,10 +709,6 @@ body{
                         <i class="fa fa-users"></i>
                     </div>
 
-                    <div class="card-title">
-                        Total Residents
-                    </div>
-
                     <div class="card-value">
                         {{ $totalResidents }}
                     </div>
@@ -726,25 +717,26 @@ body{
 
             </div>
 
+
             <div class="col-md-4">
 
-                <div class="dashboard-card">
+    <div class="dashboard-card">
 
-                    <div class="card-icon green">
-                        <i class="fa fa-user-doctor"></i>
-                    </div>
+        <div class="card-icon green">
+            <i class="fa fa-notes-medical"></i>
+        </div>
 
-                    <div class="card-title">
-                        Total Staff
-                    </div>
+        <div class="card-title">
+            Today's Checkups
+        </div>
 
-                    <div class="card-value">
-                        {{ $totalStaff }}
-                    </div>
+        <div class="card-value">
+            {{ $todayCheckups }}
+        </div>
 
-                </div>
+    </div>
 
-            </div>
+</div>
 
             <div class="col-md-4">
 
@@ -755,7 +747,7 @@ body{
                     </div>
 
                     <div class="card-title">
-                        Total Medicines
+                        Medicine Availability
                     </div>
 
                     <div class="card-value">
@@ -786,25 +778,6 @@ body{
 
             </div>
 
-            <div class="col-md-4">
-
-                <div class="dashboard-card">
-
-                    <div class="card-icon red">
-                        <i class="fa fa-calendar-xmark"></i>
-                    </div>
-
-                    <div class="card-title">
-                        Expiring Medicines
-                    </div>
-
-                    <div class="card-value">
-                        {{ $expiringMedicines }}
-                    </div>
-
-                </div>
-
-            </div>
 
             <div class="col-md-4">
 
@@ -815,7 +788,7 @@ body{
                     </div>
 
                     <div class="card-title">
-                        Immunization Summary
+                        Immunization Schedule
                     </div>
 
                     <div class="card-value">
@@ -836,7 +809,7 @@ body{
     <div class="dashboard-card">
 
         <h3 class="section-title">
-            Critical Alerts
+            Staff Alerts
         </h3>
 
         <div class="alert-box alert-yellow">
@@ -844,7 +817,7 @@ body{
         </div>
 
         <div class="alert-box alert-red">
-            Medicines expiring soon.
+            Checkup schedules pending.
         </div>
 
         <div class="alert-box alert-blue">
@@ -862,13 +835,13 @@ body{
 
         <ul class="activity-list">
 
-            <li>Baby Anne - Immunization</li>
+    <li>Resident checkup recorded.</li>
 
-            <li>Juan Dela Cruz - Checkup</li>
+    <li>Immunization updated.</li>
 
-            <li>Maria Santos - Follow-up</li>
+    <li>Medicine inventory updated.</li>
 
-        </ul>
+</ul>
 
     </div>
 
@@ -892,6 +865,94 @@ body{
     </div>
 
 </div>
+
+<script>
+
+const searchItems = [
+
+    {
+        name: "Dashboard",
+        link: "/staff/dashboard"
+    },
+
+    {
+        name: "Residents",
+        link: "/residents"
+    },
+
+    {
+        name: "Checkups",
+        link: "/checkups"
+    },
+
+    {
+        name: "Immunization",
+        link: "/immunization"
+    },
+
+    {
+        name: "Medicine Inventory",
+        link: "/medicines"
+    },
+
+    {
+        name: "Batch Tracking",
+        link: "/batch-tracking"
+    },
+
+    {
+        name: "Medicine Dispensing",
+        link: "/medicine-dispensing"
+    }
+
+];
+
+const searchInput = document.getElementById('searchInput');
+
+const searchDropdown =
+    document.getElementById('searchDropdown');
+
+searchInput.addEventListener('keyup', function () {
+
+    const value = this.value.toLowerCase();
+
+    searchDropdown.innerHTML = '';
+
+    if (value === '') {
+
+        searchDropdown.style.display = 'none';
+
+        return;
+    }
+
+    const filtered = searchItems.filter(item =>
+        item.name.toLowerCase().includes(value)
+    );
+
+    filtered.forEach(item => {
+
+        const div = document.createElement('div');
+
+        div.classList.add('search-item');
+
+        div.innerText = item.name;
+
+        div.addEventListener('click', () => {
+
+            window.location.href = item.link;
+
+        });
+
+        searchDropdown.appendChild(div);
+
+    });
+
+    searchDropdown.style.display =
+        filtered.length ? 'block' : 'none';
+
+});
+
+</script>
 
 
 </body>

@@ -22,9 +22,10 @@ class AdminDashboardController extends Controller
 
         $totalMedicines = Medicine::count();
 
-        $lowStockCount = Medicine::where('quantity', '<=', 10)->count();
+       $lowStockCount = 0;
 
-        $expiringMedicines = Medicine::whereDate('expiration_date', '<=', now()->addDays(30))->count();
+
+        $expiringMedicines = 0;
 
         $immunizationSchedules = Immunization::count();
 

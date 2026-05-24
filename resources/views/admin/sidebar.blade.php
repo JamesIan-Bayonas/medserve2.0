@@ -28,15 +28,17 @@
             <a href="#" class="nav-link text-white">Batch Tracking</a>
         </li>
 
-        <li class="nav-item mb-2">
-            <a href="#" class="nav-link text-white">Medicine Dispensing</a>
-        </li>
+    <li class="nav-item mb-2">
+    <a href="/medicine-dispensing" class="nav-link text-white">
+        Medicine Dispensing
+    </a>
+</li>
 
         <li class="nav-item mb-2">
             <a href="#" class="nav-link text-white">Staff Management</a>
         </li>
 
-        <li class="nav-item mb-2">
+      <li class="nav-item mb-2">
             <a href="#" class="nav-link text-white">Reports</a>
         </li>
 
