@@ -21,11 +21,16 @@
         </li>
 
         <li class="nav-item mb-2">
-            <a href="#" class="nav-link text-white">Medicine Inventory</a>
+           <a href="/inventory" class="sidebar-link">
+    <i class="fa-solid fa-pills"></i>
+    <span>Medicine Inventory</span>
+</a>
         </li>
 
-        <li class="nav-item mb-2">
-            <a href="#" class="nav-link text-white">Batch Tracking</a>
+        <a href="/medicine-batches-page" class="sidebar-link">
+    <i class="fa-solid fa-boxes-stacked"></i>
+    <span>Batch Tracking</span>
+</a>
         </li>
 
     <li class="nav-item mb-2">

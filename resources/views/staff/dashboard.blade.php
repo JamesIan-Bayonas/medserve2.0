@@ -28,8 +28,12 @@
 html,
 body{
     margin:0 !important;
+<<<<<<< HEAD
     padding:0 !important;
     width:100%;
+=======
+    padding:0 !important;color:#2563eb;
+>>>>>>> main
     min-height:100vh;
     overflow-x:hidden;
 }
@@ -39,7 +43,11 @@ body{
     min-height:100vh;
 }
 body{
+<<<<<<< HEAD
     background:#eef2f7;
+=======
+   background:#eef2f7;
+>>>>>>> main
     font-family:'Segoe UI', sans-serif;
     overflow-x:hidden;
     font-size:11px;
@@ -50,7 +58,11 @@ body{
 .sidebar{
     width:260px;
     height:100vh;
+<<<<<<< HEAD
     background:white;
+=======
+     background:#eef2f7;
+>>>>>>> main
     position:fixed;
     left:0;
     top:0;
@@ -64,6 +76,31 @@ body{
     overflow-y:auto;
 }
 
+<<<<<<< HEAD
+=======
+.sidebar-menu a,
+.logout-btn{
+    transition:all 0.3s ease;
+}
+
+.sidebar-menu a:hover,
+.logout-btn:hover{
+    background:#1e3a5f;
+    color:white;
+    transform:translateX(5px);
+    box-shadow:0 6px 15px rgba(30,58,95,0.2);
+}
+
+.sidebar-logo{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:20px;
+    margin-bottom:25px;
+}
+
+
+>>>>>>> main
 .sidebar::-webkit-scrollbar{
     width:4px;
 }
@@ -80,6 +117,49 @@ body{
     margin-bottom:25px;
 }
 
+<<<<<<< HEAD
+=======
+
+.logo-icon{
+    width:60px;
+    height:60px;
+    background:#1e3a5f;
+    border-radius:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    font-size:38px;
+    font-weight:bold;
+    flex-shrink:0;
+}
+
+.logo-text{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+
+.logo-text h1{
+    font-size:25px;
+    font-weight:800;
+    color:#1e3a5f;
+    margin:0;
+    line-height:1.1;
+}
+
+
+.logo-text p{
+    margin-top:4px;
+    font-size:10px;
+    letter-spacing:1.5px;
+    color:#1e3a5f;
+    font-weight:700;
+    white-space:nowrap;
+}
+
+>>>>>>> main
 .menu a{
     display:flex;
     align-items:center;
@@ -100,7 +180,11 @@ color:#1e3a5f;
 }
 
 .menu .active{
+<<<<<<< HEAD
    background:#1e3a5f;
+=======
+    background:#1e3a5f;
+>>>>>>> main
     color:white;
     box-shadow:0 4px 12px rgba(37,99,235,0.25);
 }
@@ -145,6 +229,7 @@ color:#1e3a5f;
 .top-right{
     display:flex;
     align-items:center;
+<<<<<<< HEAD
     gap:18px;
 }
 
@@ -163,10 +248,32 @@ color:#1e3a5f;
     background:white;
     font-size:14px;
     box-shadow:0 2px 8px rgba(0,0,0,0.04);
+=======
+    gap:14px;
+    position:relative;
+}
+
+.search-box{
+    position:relative;
+}
+
+
+
+.search-input{
+    width:270px;
+    padding:12px 16px;
+    border:none;
+    border-radius:14px;
+    background:white;
+    box-shadow:0 4px 12px rgba(0,0,0,0.05);
+    outline:none;
+    font-size:11px;
+>>>>>>> main
 }
 
 .search-dropdown{
     position:absolute;
+<<<<<<< HEAD
     top:58px;
     left:0;
     width:100%;
@@ -192,6 +299,31 @@ z-index:99999;
 }
 
 
+=======
+    top:50px;
+    left:0;
+    width:100%;
+    background:white;
+    border-radius:12px;
+    overflow:hidden;
+    display:none;
+    box-shadow:0 6px 18px rgba(0,0,0,0.08);
+    z-index:999;
+}
+
+.search-item{
+    display:block;
+    padding:12px;
+    color:black;
+    text-decoration:none;
+    border-radius:8px;
+}
+
+.search-item:hover{
+    background:#f1f5f9;
+}
+
+>>>>>>> main
 .notif-btn{
     width:50px;
     height:50px;
@@ -203,6 +335,15 @@ z-index:99999;
     position:relative;
     cursor:pointer;
     box-shadow:0 4px 12px rgba(0,0,0,0.05);
+<<<<<<< HEAD
+=======
+     transition:all 0.3s ease;
+}
+
+.notification-btn:hover{
+    transform:scale(1.08);
+    background:#f1f5f9;
+>>>>>>> main
 }
 
 .notif-dot{
@@ -267,6 +408,17 @@ z-index:99999;
     justify-content:center;
     align-items:center;
     gap:10px;
+<<<<<<< HEAD
+=======
+     transition:all 0.3s ease;
+    cursor:pointer;
+}
+
+.action-btn:hover{
+    transform:translateY(-3px);
+    opacity:0.92;
+    box-shadow:0 10px 20px rgba(0,0,0,0.12);
+>>>>>>> main
 }
 
 .btn-blue{
@@ -292,8 +444,15 @@ z-index:99999;
     grid-template-columns:repeat(3,1fr);
     gap:22px;
     margin-bottom:25px;
+<<<<<<< HEAD
 }
 
+=======
+
+}
+
+
+>>>>>>> main
 .dashboard-card{
     border:1px solid #e2e8f0;
     border-radius:20px;
@@ -301,8 +460,19 @@ z-index:99999;
     min-height:auto;
     box-shadow:0 4px 15px rgba(0,0,0,0.04);
     width:100%;
+<<<<<<< HEAD
     position:relative;
 z-index:1;
+=======
+    background:#f8fafc;
+      transition:all 0.3s ease;
+    cursor:pointer;
+}
+
+.dashboard-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 12px 25px rgba(0,0,0,0.08);
+>>>>>>> main
 }
 
 .card-icon{
@@ -320,6 +490,10 @@ z-index:1;
     background:#dbe7f2;
     color:#1e3a5f;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
 .green{
     background:#dfeee5;
     color:#5b8c74;
@@ -364,6 +538,7 @@ z-index:1;
     margin-top:20px;
 }
 
+<<<<<<< HEAD
 .admin-avatar{
     width:52px;
     height:52px;
@@ -375,6 +550,20 @@ z-index:1;
     align-items:center;
     font-size:20px;
     font-weight:700;
+=======
+.profile-avatar{
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    background:#1e3a5f;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+    font-weight:700;
+    flex-shrink:0;
+>>>>>>> main
 }
 
 .logout-btn{
@@ -406,14 +595,21 @@ z-index:1;
 }
 
 .bottom-grid .dashboard-card{
+<<<<<<< HEAD
   background:#f4f7fb;
+=======
+    background:#ffffff;
+>>>>>>> main
     border-radius:20px;
     padding:22px;
     width:100%;
     min-width:0;
     box-shadow:0 4px 15px rgba(0,0,0,0.04);
+<<<<<<< HEAD
     border:1px solid rgba(255,255,255,0.5);
 backdrop-filter:blur(6px);
+=======
+>>>>>>> main
 }
 
 /* SECTION TITLE */
@@ -482,6 +678,40 @@ backdrop-filter:blur(6px);
     color:#1E40AF;
 }
 
+<<<<<<< HEAD
+=======
+.empty-state{
+    padding:25px;
+    text-align:center;
+    color:#64748b;
+    font-size:15px;
+    border:1px dashed #cbd5e1;
+    border-radius:12px;
+    background:#f8fafc;
+}
+
+.sidebar-link{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:15px 18px;
+    border-radius:14px;
+    text-decoration:none;
+    color:#1e3a5f;
+    transition:0.3s;
+}
+
+.sidebar-link:hover{
+    background:#1e3a5f;
+    color:white;
+}
+
+.sidebar-link.active{
+    background:#1e3a5f;
+    color:white;
+}
+
+>>>>>>> main
 /* RESPONSIVE */
 
 @media (max-width:1200px){
@@ -509,6 +739,11 @@ backdrop-filter:blur(6px);
     }
 
 }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> main
     </style>
 
 </head>
@@ -521,9 +756,24 @@ backdrop-filter:blur(6px);
 
     <div>
 
+<<<<<<< HEAD
         <div class="logo">
             MedServe
         </div>
+=======
+       <div class="sidebar-logo">
+
+    <div class="logo-icon">
+        <i class="fa-solid fa-plus"></i>
+    </div>
+
+    <div class="logo-text">
+        <h1>MedServe</h1>
+        <p>BARANGAY NANGCA</p>
+    </div>
+
+</div>
+>>>>>>> main
 
         <div class="menu">
 
@@ -547,6 +797,7 @@ backdrop-filter:blur(6px);
                 Immunization
             </a>
 
+<<<<<<< HEAD
             <a href="#">
                 <i class="fa fa-capsules"></i>
                 Medicine Inventory
@@ -556,25 +807,49 @@ backdrop-filter:blur(6px);
                 <i class="fa fa-boxes-stacked"></i>
                 Batch Tracking
             </a>
+=======
+                        <a href="/inventory" class="sidebar-link">
+                <i class="fa-solid fa-pills"></i>
+                <span>Medicine Inventory</span>
+            </a>
+           <a href="/medicine-batches-page" class="sidebar-link">
+    <i class="fa-solid fa-boxes-stacked"></i>
+    <span>Batch Tracking</span>
+</a>
+>>>>>>> main
 
             <a href="#">
                 <i class="fa fa-hand-holding-medical"></i>
                 Medicine Dispensing
             </a>
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
         </div>
 
     </div>
 
+<<<<<<< HEAD
     <!-- ADMIN PROFILE -->
+=======
+    <!-- STAFF PROFILE -->
+>>>>>>> main
 
     <div>
 
         <div class="admin-profile">
 
+<<<<<<< HEAD
             <div class="admin-avatar">
                 A
             </div>
+=======
+          <div class="profile-avatar">
+    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+</div>
+>>>>>>> main
 
             <div>
                 <div style="font-weight:700;font-size:11px;">
@@ -582,12 +857,17 @@ backdrop-filter:blur(6px);
                 </div>
 
                 <div style="font-size:11px;color:#64748b;">
+<<<<<<< HEAD
                    Barangay Health Worker
+=======
+                    Health Worker
+>>>>>>> main
                 </div>
             </div>
 
         </div>
 
+<<<<<<< HEAD
        <form method="POST" action="{{ route('logout') }}">
 
     @csrf
@@ -600,6 +880,15 @@ backdrop-filter:blur(6px);
 
     </button>
 
+=======
+        <form action="{{ route('logout') }}" method="POST">
+    @csrf
+
+    <button type="submit" class="logout-btn">
+        <i class="fa fa-right-from-bracket"></i>
+        Logout
+    </button>
+>>>>>>> main
 </form>
 
     </div>
@@ -621,6 +910,7 @@ backdrop-filter:blur(6px);
 
     <div class="top-right">
 
+<<<<<<< HEAD
        <div class="top-right">
 
     <div class="search-container">
@@ -638,12 +928,28 @@ backdrop-filter:blur(6px);
     </div>
 
 </div>
+=======
+        <div class="search-box">
+            <input type="text"
+                   id="searchInput"
+                   class="search-input"
+                   placeholder="Search...">
+
+            <div class="search-dropdown"
+                 id="searchDropdown">
+            </div>
+        </div>
+>>>>>>> main
 
         <div class="notif-btn"
              onclick="toggleNotifications()">
 
             <i class="fa fa-bell"
+<<<<<<< HEAD
                style="color:#1e3a5f;font-size:20px;"></i>
+=======
+               style="color:#2563eb;font-size:20px;"></i>
+>>>>>>> main
 
             <div class="notif-dot"></div>
         </div>
@@ -659,6 +965,12 @@ backdrop-filter:blur(6px);
                 {{ $lowStockCount }} low stock medicines detected.
             </div>
 
+<<<<<<< HEAD
+=======
+            <div class="notification-item notif-red">
+                {{ $expiringMedicines }} medicines expiring soon.
+            </div>
+>>>>>>> main
 
             <div class="notification-item notif-blue">
                 {{ $immunizationSchedules }} immunization schedules today.
@@ -673,6 +985,10 @@ backdrop-filter:blur(6px);
 
 
         <!-- QUICK ACTIONS -->
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
 <div class="quick-actions">
 
     <button class="action-btn btn-blue">
@@ -709,6 +1025,13 @@ backdrop-filter:blur(6px);
                         <i class="fa fa-users"></i>
                     </div>
 
+<<<<<<< HEAD
+=======
+                    <div class="card-title">
+                        Total Residents
+                    </div>
+
+>>>>>>> main
                     <div class="card-value">
                         {{ $totalResidents }}
                     </div>
@@ -717,6 +1040,7 @@ backdrop-filter:blur(6px);
 
             </div>
 
+<<<<<<< HEAD
 
             <div class="col-md-4">
 
@@ -737,6 +1061,27 @@ backdrop-filter:blur(6px);
     </div>
 
 </div>
+=======
+            <div class="col-md-4">
+
+                <div class="dashboard-card">
+
+                    <div class="card-icon green">
+                        <i class="fa fa-user-doctor"></i>
+                    </div>
+
+                    <div class="card-title">
+                        Total Staff
+                    </div>
+
+                    <div class="card-value">
+                        {{ $totalStaff }}
+                    </div>
+
+                </div>
+
+            </div>
+>>>>>>> main
 
             <div class="col-md-4">
 
@@ -747,7 +1092,11 @@ backdrop-filter:blur(6px);
                     </div>
 
                     <div class="card-title">
+<<<<<<< HEAD
                         Medicine Availability
+=======
+                        Total Medicines
+>>>>>>> main
                     </div>
 
                     <div class="card-value">
@@ -778,6 +1127,28 @@ backdrop-filter:blur(6px);
 
             </div>
 
+<<<<<<< HEAD
+=======
+            <div class="col-md-4">
+
+                <div class="dashboard-card">
+
+                    <div class="card-icon red">
+                        <i class="fa fa-calendar-xmark"></i>
+                    </div>
+
+                    <div class="card-title">
+                        Expiring Medicines
+                    </div>
+
+                    <div class="card-value">
+                        {{ $expiringMedicines }}
+                    </div>
+
+                </div>
+
+            </div>
+>>>>>>> main
 
             <div class="col-md-4">
 
@@ -788,7 +1159,11 @@ backdrop-filter:blur(6px);
                     </div>
 
                     <div class="card-title">
+<<<<<<< HEAD
                         Immunization Schedule
+=======
+                        Immunization Summary
+>>>>>>> main
                     </div>
 
                     <div class="card-value">
@@ -809,7 +1184,11 @@ backdrop-filter:blur(6px);
     <div class="dashboard-card">
 
         <h3 class="section-title">
+<<<<<<< HEAD
             Staff Alerts
+=======
+            Critical Alerts
+>>>>>>> main
         </h3>
 
         <div class="alert-box alert-yellow">
@@ -817,7 +1196,11 @@ backdrop-filter:blur(6px);
         </div>
 
         <div class="alert-box alert-red">
+<<<<<<< HEAD
             Checkup schedules pending.
+=======
+            Medicines expiring soon.
+>>>>>>> main
         </div>
 
         <div class="alert-box alert-blue">
@@ -833,6 +1216,7 @@ backdrop-filter:blur(6px);
             Upcoming Schedules
         </h3>
 
+<<<<<<< HEAD
         <ul class="activity-list">
 
     <li>Resident checkup recorded.</li>
@@ -843,6 +1227,11 @@ backdrop-filter:blur(6px);
 
 </ul>
 
+=======
+        <div class="empty-state">
+    No upcoming schedules.
+</div>
+>>>>>>> main
     </div>
 
     <!-- RECENT -->
@@ -852,6 +1241,7 @@ backdrop-filter:blur(6px);
             Recent Activities
         </h3>
 
+<<<<<<< HEAD
         <ul class="activity-list">
 
             <li>Staff added new medicine.</li>
@@ -861,6 +1251,11 @@ backdrop-filter:blur(6px);
             <li>Immunization updated.</li>
 
         </ul>
+=======
+       <div class="empty-state">
+    No recent activity.
+</div>
+>>>>>>> main
 
     </div>
 
@@ -868,6 +1263,7 @@ backdrop-filter:blur(6px);
 
 <script>
 
+<<<<<<< HEAD
 const searchItems = [
 
     {
@@ -949,6 +1345,59 @@ searchInput.addEventListener('keyup', function () {
 
     searchDropdown.style.display =
         filtered.length ? 'block' : 'none';
+=======
+const searchData = [
+    { name: "Dashboard", link: "/admin/dashboard" },
+    { name: "Residents", link: "/residents" },
+    { name: "Checkups", link: "/checkups" },
+    { name: "Immunization", link: "/immunization" },
+    { name: "Medicine Inventory", link: "/inventory" },
+    { name: "Batch Tracking", link: "/batch-tracking" },
+    { name: "Medicine Dispensing", link: "/medicine-dispensing" },
+    { name: "Staff Management", link: "/staff-management" },
+    { name: "Reports", link: "/reports" },
+    { name: "Audit Logs", link: "/audit-logs" },
+    { name: "Settings", link: "/settings" }
+];
+
+const searchInput = document.getElementById("searchInput");
+const searchDropdown = document.getElementById("searchDropdown");
+
+searchInput.addEventListener("keyup", function () {
+
+    let value = this.value.toLowerCase();
+
+    searchDropdown.innerHTML = "";
+
+    if (value === "") {
+        searchDropdown.style.display = "none";
+        return;
+    }
+
+    let filtered = searchData.filter(item =>
+        item.name.toLowerCase().includes(value)
+    );
+
+    if (filtered.length > 0) {
+
+        searchDropdown.style.display = "block";
+
+        filtered.forEach(item => {
+
+            searchDropdown.innerHTML += `
+                <a href="${item.link}" class="search-item">
+                    ${item.name}
+                </a>
+            `;
+
+        });
+
+    } else {
+
+        searchDropdown.style.display = "none";
+
+    }
+>>>>>>> main
 
 });
 
