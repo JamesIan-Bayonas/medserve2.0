@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
+
 return Application::configure(basePath: dirname(__DIR__))
 
     ->withRouting(
@@ -18,6 +19,10 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             \App\Http\Middleware\HandleInertiaRequests::class,
         ]);
+
+        $middleware->alias([
+    'staff' => \App\Http\Middleware\StaffMiddleware::class,
+]);
 
         $middleware->alias([
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
