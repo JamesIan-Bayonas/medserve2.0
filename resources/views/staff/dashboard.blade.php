@@ -447,17 +447,18 @@ color:#1e3a5f;
     margin-top:20px;
 }
 
-.admin-avatar{
-    width:52px;
-    height:52px;
+.profile-avatar{
+    width:60px;
+    height:60px;
     border-radius:50%;
-   background:#1e3a5f;
+    background:#1e3a5f;
     color:white;
     display:flex;
-    justify-content:center;
     align-items:center;
-    font-size:20px;
+    justify-content:center;
+    font-size:24px;
     font-weight:700;
+    flex-shrink:0;
 }
 
 .logout-btn{
@@ -684,47 +685,28 @@ color:#1e3a5f;
                 Medicine Dispensing
             </a>
 
-            <a href="#">
-                <i class="fa fa-user-doctor"></i>
-                Staff Management
-            </a>
-
-            <a href="#">
-                <i class="fa fa-chart-pie"></i>
-                Reports
-            </a>
-
-            <a href="#">
-                <i class="fa fa-clock-rotate-left"></i>
-                Audit Logs
-            </a>
-
-            <a href="#">
-                <i class="fa fa-gear"></i>
-                Settings
-            </a>
 
         </div>
 
     </div>
 
-    <!-- ADMIN PROFILE -->
+    <!-- STAFF PROFILE -->
 
     <div>
 
         <div class="admin-profile">
 
-            <div class="admin-avatar">
-                A
-            </div>
+          <div class="profile-avatar">
+    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+</div>
 
             <div>
                 <div style="font-weight:700;font-size:11px;">
-                    Admin
+                    Staff
                 </div>
 
                 <div style="font-size:11px;color:#64748b;">
-                    Barangay Captain
+                    Health Worker
                 </div>
             </div>
 
@@ -752,7 +734,7 @@ color:#1e3a5f;
 <div class="top-section">
 
     <div class="page-title">
-        <h1>MedServe Administration</h1>
+        <h1>Staff Dashboard</h1>
         <p>Barangay Health Center Management System</p>
     </div>
 
