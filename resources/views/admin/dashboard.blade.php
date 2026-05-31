@@ -679,10 +679,10 @@ color:#1e3a5f;
     <span>Batch Tracking</span>
 </a>
 
-            <a href="#">
-                <i class="fa fa-hand-holding-medical"></i>
-                Medicine Dispensing
-            </a>
+           <a href="/medicine-dispensing">
+    <i class="fa fa-hand-holding-medical"></i>
+    Medicine Dispensing
+    </a>
 
             <a href="#">
                 <i class="fa fa-user-doctor"></i>
@@ -981,7 +981,50 @@ color:#1e3a5f;
         </div>
 
     </div>
+    <!-- RECENT DISPENSING RECORDS -->
+<div class="dashboard-card" style="margin-top: 20px; grid-column: 1 / -1;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h3 class="section-title" style="margin: 0;">Recent Dispensing Records</h3>
+       <a href="/admin/reports" style="font-size: 14px; text-decoration: none; color: #0d6efd;">View All in Reports &rarr;</a>
+    </div>
 
+    <div style="overflow-x: auto;">
+    <table style="width: 100%; border-collapse: collapse; text-align: left; color: #1e293b;">
+        <thead style="background-color: #f8f9fa; border-bottom: 2px solid #dee2e6;">
+            <tr>
+                <th style="padding: 12px; font-weight: 600; color: #1e293b;">Patient Name</th>
+                <th style="padding: 12px; font-weight: 600; color: #1e293b;">Medicine</th>
+                <th style="padding: 12px; font-weight: 600; color: #1e293b;">Qty</th>
+                <th style="padding: 12px; font-weight: 600; color: #1e293b;">Dosage</th>
+                <th style="padding: 12px; font-weight: 600; color: #1e293b;">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <!-- Sample Record 1 -->
+            <tr style="border-bottom: 1px solid #dee2e6;">
+                <td style="padding: 12px; font-weight: bold; color: #1e293b;">Alyssa Faith S. Bagunbon</td>
+                <td style="padding: 12px; color: #1e293b;">Paracetamol</td>
+                <td style="padding: 12px; font-weight: bold; color: #1e293b;">10</td>
+                <td style="padding: 12px; color: #1e293b;">1 tablet 3x a day</td>
+                <td style="padding: 12px; color: #475569;">5/31/2026</td>
+            </tr>
+
+            <!-- Sample Record 2 -->
+            <tr style="border-bottom: 1px solid #dee2e6;">
+                <td style="padding: 12px; font-weight: bold; color: #1e293b;">Maria Pineda</td>
+                <td style="padding: 12px; color: #1e293b;">Amoxicillin</td>
+                <td style="padding: 12px; font-weight: bold; color: #1e293b;">21</td>
+                <td style="padding: 12px; color: #1e293b;">1 capsule 3x a day for 7 days</td>
+                <td style="padding: 12px; color: #475569;">5/31/2026</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+            </tbody>
+        </table>
+    </div>
+</div>
     <!-- UPCOMING -->
     <div class="dashboard-card">
 

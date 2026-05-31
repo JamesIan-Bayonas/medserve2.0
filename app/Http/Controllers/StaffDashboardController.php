@@ -10,7 +10,7 @@ class StaffDashboardController extends Controller
 {
     public function index()
     {
-       $totalResidents = 0;
+        $totalResidents = 0;
 
         $todayCheckups = 0;
 
@@ -29,10 +29,9 @@ class StaffDashboardController extends Controller
             'todayCheckups',
             'totalMedicines',
             'lowStockCount',
-            'immunizationSchedules',
             'expiringMedicines',
+            'immunizationSchedules',
             'totalStaff'
-            
         ));
     }
 }

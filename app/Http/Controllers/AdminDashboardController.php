@@ -22,6 +22,9 @@ class AdminDashboardController extends Controller
         $totalResidents = Resident::count();
         $totalStaff = User::where('role', 'staff')->count();
         $totalMedicines = Medicine::count();
+        $lowStockCount = 0;
+        $expiringMedicines = 0;
+
         $immunizationSchedules = Immunization::count();
 
         // 2. Your Feature Logic: Fetch precise low stock records
