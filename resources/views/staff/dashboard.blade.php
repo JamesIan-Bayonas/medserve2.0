@@ -28,7 +28,12 @@
 html,
 body{
     margin:0 !important;
+<<<<<<< HEAD
+    padding:0 !important;
+    width:100%;
+=======
     padding:0 !important;color:#2563eb;
+>>>>>>> main
     min-height:100vh;
     overflow-x:hidden;
 }
@@ -38,7 +43,11 @@ body{
     min-height:100vh;
 }
 body{
+<<<<<<< HEAD
+    background:#eef2f7;
+=======
    background:#eef2f7;
+>>>>>>> main
     font-family:'Segoe UI', sans-serif;
     overflow-x:hidden;
     font-size:11px;
@@ -49,7 +58,11 @@ body{
 .sidebar{
     width:260px;
     height:100vh;
+<<<<<<< HEAD
+    background:white;
+=======
      background:#eef2f7;
+>>>>>>> main
     position:fixed;
     left:0;
     top:0;
@@ -63,6 +76,8 @@ body{
     overflow-y:auto;
 }
 
+<<<<<<< HEAD
+=======
 .sidebar-menu a,
 .logout-btn{
     transition:all 0.3s ease;
@@ -85,6 +100,7 @@ body{
 }
 
 
+>>>>>>> main
 .sidebar::-webkit-scrollbar{
     width:4px;
 }
@@ -101,6 +117,8 @@ body{
     margin-bottom:25px;
 }
 
+<<<<<<< HEAD
+=======
 
 .logo-icon{
     width:60px;
@@ -141,6 +159,7 @@ body{
     white-space:nowrap;
 }
 
+>>>>>>> main
 .menu a{
     display:flex;
     align-items:center;
@@ -161,7 +180,11 @@ color:#1e3a5f;
 }
 
 .menu .active{
+<<<<<<< HEAD
+   background:#1e3a5f;
+=======
     background:#1e3a5f;
+>>>>>>> main
     color:white;
     box-shadow:0 4px 12px rgba(37,99,235,0.25);
 }
@@ -206,6 +229,26 @@ color:#1e3a5f;
 .top-right{
     display:flex;
     align-items:center;
+<<<<<<< HEAD
+    gap:18px;
+}
+
+.search-container{
+    position:relative;
+    z-index:99999;
+}
+
+.search-input{
+    width:300px;
+    height:48px;
+    border:none;
+    outline:none;
+    padding:0 20px;
+    border-radius:14px;
+    background:white;
+    font-size:14px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.04);
+=======
     gap:14px;
     position:relative;
 }
@@ -225,10 +268,38 @@ color:#1e3a5f;
     box-shadow:0 4px 12px rgba(0,0,0,0.05);
     outline:none;
     font-size:11px;
+>>>>>>> main
 }
 
 .search-dropdown{
     position:absolute;
+<<<<<<< HEAD
+    top:58px;
+    left:0;
+    width:100%;
+    background:white;
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:0 8px 24px rgba(0,0,0,0.08);
+    display:none;
+    z-index:1000;
+    pointer-events:auto;
+z-index:99999;
+}
+
+.search-item{
+    padding:14px 18px;
+    cursor:pointer;
+    transition:0.2s;
+    font-size:14px;
+}
+
+.search-item:hover{
+    background:#eef2f7;
+}
+
+
+=======
     top:50px;
     left:0;
     width:100%;
@@ -252,6 +323,7 @@ color:#1e3a5f;
     background:#f1f5f9;
 }
 
+>>>>>>> main
 .notif-btn{
     width:50px;
     height:50px;
@@ -263,12 +335,15 @@ color:#1e3a5f;
     position:relative;
     cursor:pointer;
     box-shadow:0 4px 12px rgba(0,0,0,0.05);
+<<<<<<< HEAD
+=======
      transition:all 0.3s ease;
 }
 
 .notification-btn:hover{
     transform:scale(1.08);
     background:#f1f5f9;
+>>>>>>> main
 }
 
 .notif-dot{
@@ -333,6 +408,8 @@ color:#1e3a5f;
     justify-content:center;
     align-items:center;
     gap:10px;
+<<<<<<< HEAD
+=======
      transition:all 0.3s ease;
     cursor:pointer;
 }
@@ -341,6 +418,7 @@ color:#1e3a5f;
     transform:translateY(-3px);
     opacity:0.92;
     box-shadow:0 10px 20px rgba(0,0,0,0.12);
+>>>>>>> main
 }
 
 .btn-blue{
@@ -366,10 +444,15 @@ color:#1e3a5f;
     grid-template-columns:repeat(3,1fr);
     gap:22px;
     margin-bottom:25px;
+<<<<<<< HEAD
+}
+
+=======
 
 }
 
 
+>>>>>>> main
 .dashboard-card{
     border:1px solid #e2e8f0;
     border-radius:20px;
@@ -377,6 +460,10 @@ color:#1e3a5f;
     min-height:auto;
     box-shadow:0 4px 15px rgba(0,0,0,0.04);
     width:100%;
+<<<<<<< HEAD
+    position:relative;
+z-index:1;
+=======
     background:#f8fafc;
       transition:all 0.3s ease;
     cursor:pointer;
@@ -385,6 +472,7 @@ color:#1e3a5f;
 .dashboard-card:hover{
     transform:translateY(-5px);
     box-shadow:0 12px 25px rgba(0,0,0,0.08);
+>>>>>>> main
 }
 
 .card-icon{
@@ -402,7 +490,10 @@ color:#1e3a5f;
     background:#dbe7f2;
     color:#1e3a5f;
 }
+<<<<<<< HEAD
+=======
 
+>>>>>>> main
 .green{
     background:#dfeee5;
     color:#5b8c74;
@@ -447,6 +538,19 @@ color:#1e3a5f;
     margin-top:20px;
 }
 
+<<<<<<< HEAD
+.admin-avatar{
+    width:52px;
+    height:52px;
+    border-radius:50%;
+   background:#1e3a5f;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:20px;
+    font-weight:700;
+=======
 .profile-avatar{
     width:60px;
     height:60px;
@@ -459,6 +563,7 @@ color:#1e3a5f;
     font-size:24px;
     font-weight:700;
     flex-shrink:0;
+>>>>>>> main
 }
 
 .logout-btn{
@@ -490,12 +595,21 @@ color:#1e3a5f;
 }
 
 .bottom-grid .dashboard-card{
+<<<<<<< HEAD
+  background:#f4f7fb;
+=======
     background:#ffffff;
+>>>>>>> main
     border-radius:20px;
     padding:22px;
     width:100%;
     min-width:0;
     box-shadow:0 4px 15px rgba(0,0,0,0.04);
+<<<<<<< HEAD
+    border:1px solid rgba(255,255,255,0.5);
+backdrop-filter:blur(6px);
+=======
+>>>>>>> main
 }
 
 /* SECTION TITLE */
@@ -564,6 +678,8 @@ color:#1e3a5f;
     color:#1E40AF;
 }
 
+<<<<<<< HEAD
+=======
 .empty-state{
     padding:25px;
     text-align:center;
@@ -595,6 +711,7 @@ color:#1e3a5f;
     color:white;
 }
 
+>>>>>>> main
 /* RESPONSIVE */
 
 @media (max-width:1200px){
@@ -622,8 +739,11 @@ color:#1e3a5f;
     }
 
 }
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> main
     </style>
 
 </head>
@@ -636,6 +756,11 @@ color:#1e3a5f;
 
     <div>
 
+<<<<<<< HEAD
+        <div class="logo">
+            MedServe
+        </div>
+=======
        <div class="sidebar-logo">
 
     <div class="logo-icon">
@@ -648,6 +773,7 @@ color:#1e3a5f;
     </div>
 
 </div>
+>>>>>>> main
 
         <div class="menu">
 
@@ -671,6 +797,17 @@ color:#1e3a5f;
                 Immunization
             </a>
 
+<<<<<<< HEAD
+            <a href="#">
+                <i class="fa fa-capsules"></i>
+                Medicine Inventory
+            </a>
+
+            <a href="#">
+                <i class="fa fa-boxes-stacked"></i>
+                Batch Tracking
+            </a>
+=======
                         <a href="/inventory" class="sidebar-link">
                 <i class="fa-solid fa-pills"></i>
                 <span>Medicine Inventory</span>
@@ -679,26 +816,40 @@ color:#1e3a5f;
     <i class="fa-solid fa-boxes-stacked"></i>
     <span>Batch Tracking</span>
 </a>
+>>>>>>> main
 
             <a href="#">
                 <i class="fa fa-hand-holding-medical"></i>
                 Medicine Dispensing
             </a>
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> main
         </div>
 
     </div>
 
+<<<<<<< HEAD
+    <!-- ADMIN PROFILE -->
+=======
     <!-- STAFF PROFILE -->
+>>>>>>> main
 
     <div>
 
         <div class="admin-profile">
 
+<<<<<<< HEAD
+            <div class="admin-avatar">
+                A
+            </div>
+=======
           <div class="profile-avatar">
     {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
 </div>
+>>>>>>> main
 
             <div>
                 <div style="font-weight:700;font-size:11px;">
@@ -706,12 +857,30 @@ color:#1e3a5f;
                 </div>
 
                 <div style="font-size:11px;color:#64748b;">
+<<<<<<< HEAD
+                   Barangay Health Worker
+=======
                     Health Worker
+>>>>>>> main
                 </div>
             </div>
 
         </div>
 
+<<<<<<< HEAD
+       <form method="POST" action="{{ route('logout') }}">
+
+    @csrf
+
+    <button type="submit" class="logout-btn">
+
+        <i class="fa fa-right-from-bracket"></i>
+
+        Logout
+
+    </button>
+
+=======
         <form action="{{ route('logout') }}" method="POST">
     @csrf
 
@@ -719,6 +888,7 @@ color:#1e3a5f;
         <i class="fa fa-right-from-bracket"></i>
         Logout
     </button>
+>>>>>>> main
 </form>
 
     </div>
@@ -740,6 +910,25 @@ color:#1e3a5f;
 
     <div class="top-right">
 
+<<<<<<< HEAD
+       <div class="top-right">
+
+    <div class="search-container">
+
+        <input
+            type="text"
+            id="searchInput"
+            class="search-input"
+            placeholder="Search..."
+            autocomplete="off"
+        >
+
+        <div id="searchDropdown" class="search-dropdown"></div>
+
+    </div>
+
+</div>
+=======
         <div class="search-box">
             <input type="text"
                    id="searchInput"
@@ -750,12 +939,17 @@ color:#1e3a5f;
                  id="searchDropdown">
             </div>
         </div>
+>>>>>>> main
 
         <div class="notif-btn"
              onclick="toggleNotifications()">
 
             <i class="fa fa-bell"
+<<<<<<< HEAD
+               style="color:#1e3a5f;font-size:20px;"></i>
+=======
                style="color:#2563eb;font-size:20px;"></i>
+>>>>>>> main
 
             <div class="notif-dot"></div>
         </div>
@@ -771,9 +965,12 @@ color:#1e3a5f;
                 {{ $lowStockCount }} low stock medicines detected.
             </div>
 
+<<<<<<< HEAD
+=======
             <div class="notification-item notif-red">
                 {{ $expiringMedicines }} medicines expiring soon.
             </div>
+>>>>>>> main
 
             <div class="notification-item notif-blue">
                 {{ $immunizationSchedules }} immunization schedules today.
@@ -788,7 +985,10 @@ color:#1e3a5f;
 
 
         <!-- QUICK ACTIONS -->
+<<<<<<< HEAD
+=======
 
+>>>>>>> main
 <div class="quick-actions">
 
     <button class="action-btn btn-blue">
@@ -825,10 +1025,13 @@ color:#1e3a5f;
                         <i class="fa fa-users"></i>
                     </div>
 
+<<<<<<< HEAD
+=======
                     <div class="card-title">
                         Total Residents
                     </div>
 
+>>>>>>> main
                     <div class="card-value">
                         {{ $totalResidents }}
                     </div>
@@ -837,6 +1040,28 @@ color:#1e3a5f;
 
             </div>
 
+<<<<<<< HEAD
+
+            <div class="col-md-4">
+
+    <div class="dashboard-card">
+
+        <div class="card-icon green">
+            <i class="fa fa-notes-medical"></i>
+        </div>
+
+        <div class="card-title">
+            Today's Checkups
+        </div>
+
+        <div class="card-value">
+            {{ $todayCheckups }}
+        </div>
+
+    </div>
+
+</div>
+=======
             <div class="col-md-4">
 
                 <div class="dashboard-card">
@@ -856,6 +1081,7 @@ color:#1e3a5f;
                 </div>
 
             </div>
+>>>>>>> main
 
             <div class="col-md-4">
 
@@ -866,7 +1092,11 @@ color:#1e3a5f;
                     </div>
 
                     <div class="card-title">
+<<<<<<< HEAD
+                        Medicine Availability
+=======
                         Total Medicines
+>>>>>>> main
                     </div>
 
                     <div class="card-value">
@@ -897,6 +1127,8 @@ color:#1e3a5f;
 
             </div>
 
+<<<<<<< HEAD
+=======
             <div class="col-md-4">
 
                 <div class="dashboard-card">
@@ -916,6 +1148,7 @@ color:#1e3a5f;
                 </div>
 
             </div>
+>>>>>>> main
 
             <div class="col-md-4">
 
@@ -926,7 +1159,11 @@ color:#1e3a5f;
                     </div>
 
                     <div class="card-title">
+<<<<<<< HEAD
+                        Immunization Schedule
+=======
                         Immunization Summary
+>>>>>>> main
                     </div>
 
                     <div class="card-value">
@@ -947,7 +1184,11 @@ color:#1e3a5f;
     <div class="dashboard-card">
 
         <h3 class="section-title">
+<<<<<<< HEAD
+            Staff Alerts
+=======
             Critical Alerts
+>>>>>>> main
         </h3>
 
         <div class="alert-box alert-yellow">
@@ -955,7 +1196,11 @@ color:#1e3a5f;
         </div>
 
         <div class="alert-box alert-red">
+<<<<<<< HEAD
+            Checkup schedules pending.
+=======
             Medicines expiring soon.
+>>>>>>> main
         </div>
 
         <div class="alert-box alert-blue">
@@ -971,9 +1216,22 @@ color:#1e3a5f;
             Upcoming Schedules
         </h3>
 
+<<<<<<< HEAD
+        <ul class="activity-list">
+
+    <li>Resident checkup recorded.</li>
+
+    <li>Immunization updated.</li>
+
+    <li>Medicine inventory updated.</li>
+
+</ul>
+
+=======
         <div class="empty-state">
     No upcoming schedules.
 </div>
+>>>>>>> main
     </div>
 
     <!-- RECENT -->
@@ -983,9 +1241,21 @@ color:#1e3a5f;
             Recent Activities
         </h3>
 
+<<<<<<< HEAD
+        <ul class="activity-list">
+
+            <li>Staff added new medicine.</li>
+
+            <li>Resident checkup recorded.</li>
+
+            <li>Immunization updated.</li>
+
+        </ul>
+=======
        <div class="empty-state">
     No recent activity.
 </div>
+>>>>>>> main
 
     </div>
 
@@ -993,6 +1263,89 @@ color:#1e3a5f;
 
 <script>
 
+<<<<<<< HEAD
+const searchItems = [
+
+    {
+        name: "Dashboard",
+        link: "/staff/dashboard"
+    },
+
+    {
+        name: "Residents",
+        link: "/residents"
+    },
+
+    {
+        name: "Checkups",
+        link: "/checkups"
+    },
+
+    {
+        name: "Immunization",
+        link: "/immunization"
+    },
+
+    {
+        name: "Medicine Inventory",
+        link: "/medicines"
+    },
+
+    {
+        name: "Batch Tracking",
+        link: "/batch-tracking"
+    },
+
+    {
+        name: "Medicine Dispensing",
+        link: "/medicine-dispensing"
+    }
+
+];
+
+const searchInput = document.getElementById('searchInput');
+
+const searchDropdown =
+    document.getElementById('searchDropdown');
+
+searchInput.addEventListener('keyup', function () {
+
+    const value = this.value.toLowerCase();
+
+    searchDropdown.innerHTML = '';
+
+    if (value === '') {
+
+        searchDropdown.style.display = 'none';
+
+        return;
+    }
+
+    const filtered = searchItems.filter(item =>
+        item.name.toLowerCase().includes(value)
+    );
+
+    filtered.forEach(item => {
+
+        const div = document.createElement('div');
+
+        div.classList.add('search-item');
+
+        div.innerText = item.name;
+
+        div.addEventListener('click', () => {
+
+            window.location.href = item.link;
+
+        });
+
+        searchDropdown.appendChild(div);
+
+    });
+
+    searchDropdown.style.display =
+        filtered.length ? 'block' : 'none';
+=======
 const searchData = [
     { name: "Dashboard", link: "/admin/dashboard" },
     { name: "Residents", link: "/residents" },
@@ -1044,6 +1397,7 @@ searchInput.addEventListener("keyup", function () {
         searchDropdown.style.display = "none";
 
     }
+>>>>>>> main
 
 });
 
