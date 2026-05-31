@@ -23,6 +23,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])
         ->name('admin.dashboard');
+        Route::get('/admin/reports', function () {
+            return view('admin.reports');
+        })->name('reports.index');
 
     Route::get('/medicine-batches-page', function () {
         return Inertia::render('MedicineBatches');

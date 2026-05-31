@@ -1,822 +1,271 @@
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 export default function MedicineDispensing() {
+    const [searchResident, setSearchResident] = useState("");
+    const [selectedResident, setSelectedResident] = useState(null);
+    const [selectedMedicine, setSelectedMedicine] = useState(null);
+    const [quantity, setQuantity] = useState("");
+    const [dosage, setDosage] = useState("");
+    const [records, setRecords] = useState([]);
+    const [currentStep, setCurrentStep] = useState(1);
 
-    const [loading, setLoading] = useState(false);
-    const [availableStock, setAvailableStock] = useState(0);
-    const [success, setSuccess] = useState("");
-    const [history, setHistory] = useState([]);
+    const residents = [
+        {
+            name: "Alyssa Faith S. Bagunbon",
+            id: "2024-0012",
+            purok: "Purok 1",
+            initials: "AF",
+            color: "#0F4C81",
+        },
+        {
+            name: "Maria Pineda",
+            id: "2024-0045",
+            purok: "Purok 2",
+            initials: "MP",
+            color: "#6EE7A1",
+        },
+    ];
 
-    const [search, setSearch] = useState("");
-    const [filter, setFilter] = useState("all");
+    const medicines = [
+        { name: "Paracetamol", stock: 150 },
+        { name: "Amoxicillin", stock: 85 },
+        { name: "Vitamin C", stock: 200 },
+    ];
 
-    const [form, setForm] = useState({
-        resident_id: "",
-        medicine_id: "",
-        quantity: "",
-        dosage: "",
-        instructions: "",
-    });
+    const filteredResidents = residents.filter((resident) =>
+        resident.name.toLowerCase().includes(searchResident.toLowerCase())
+    );
 
-    useEffect(() => {
-        fetchHistory();
-    }, []);
+    const handleDispense = () => {
+        if (!selectedResident) return alert("Please select a resident.");
+        if (!selectedMedicine) return alert("Please select a medicine.");
+        if (!quantity) return alert("Please enter quantity.");
+        if (!dosage) return alert("Please enter dosage.");
+        if (Number(quantity) <= 0) return alert("Quantity must be greater than 0.");
+        if (Number(quantity) > selectedMedicine.stock) return alert("Not enough stock available.");
 
-    const fetchHistory = async () => {
+        const newRecord = {
+            resident: selectedResident.name,
+            medicine: selectedMedicine.name,
+            quantity,
+            dosage,
+            date: new Date().toLocaleDateString(),
+        };
 
-        try {
+        setRecords([newRecord, ...records]);
+        alert("Medicine Dispensed Successfully!");
 
-            const response = await fetch(
-                "/medicine-dispensing-history"
-            );
-
-            const data = await response.json();
-
-            setHistory(data);
-
-        } catch (error) {
-
-            console.log(error);
-        }
+        // Reset all states back to Step 1
+        setCurrentStep(1);
+        setSelectedResident(null);
+        setSelectedMedicine(null);
+        setQuantity("");
+        setDosage("");
     };
-
-    const handleChange = (e) => {
-
-        setForm({
-            ...form,
-            [e.target.name]: e.target.value
-        });
-    };
-
-    const handleSubmit = async (e) => {
-
-        e.preventDefault();
-
-        if (loading) return;
-
-        if (!form.resident_id) {
-            alert("Please select resident");
-            return;
-        }
-
-        if (!form.medicine_id) {
-            alert("Please select medicine");
-            return;
-        }
-
-        if (!form.quantity || form.quantity <= 0) {
-            alert("Enter valid quantity");
-            return;
-        }
-
-        if (!form.dosage) {
-            alert("Please enter dosage");
-            return;
-        }
-
-        if (!form.instructions) {
-            alert("Please enter instructions");
-            return;
-        }
-
-        if (parseInt(form.quantity) > availableStock) {
-            alert("Quantity exceeds stock");
-            return;
-        }
-
-        try {
-
-            setLoading(true);
-
-            const response = await fetch(
-                "/medicine-dispensing",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Accept": "application/json",
-                        "X-CSRF-TOKEN":
-                            document.querySelector(
-                                'meta[name="csrf-token"]'
-                            ).content
-                    },
-                    body: JSON.stringify(form)
-                }
-            );
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                alert(data.message);
-                return;
-            }
-
-            setSuccess(data.message);
-
-            fetchHistory();
-
-            setForm({
-                resident_id: "",
-                medicine_id: "",
-                quantity: "",
-                dosage: "",
-                instructions: "",
-            });
-
-            setAvailableStock(0);
-
-        } catch (error) {
-
-            console.log(error);
-
-        } finally {
-
-            setLoading(false);
-        }
-    };
-
-const filteredHistory = history.filter((item) => {
-
-    const resident =
-        (
-            item.resident?.full_name ||
-            item.resident?.fullname ||
-            item.resident?.name ||
-            ""
-        ).toLowerCase();
-
-    const medicine =
-        (
-            item.medicine?.medicine_name ||
-            item.medicine?.name ||
-            ""
-        ).toLowerCase();
-
-    const matchesSearch =
-        resident.includes(search.toLowerCase()) ||
-        medicine.includes(search.toLowerCase());
-
-    const matchesFilter =
-        filter === "all" ||
-        item.medicine?.medicine_name === filter ||
-        item.medicine?.name === filter;
-
-    return matchesSearch && matchesFilter;
-});
 
     return (
-
-        <div style={styles.page}>
-
-            {/* HEADER */}
-
-            <div style={styles.topHeader}>
-
-                <div>
-                    <h1 style={styles.title}>
-                        Medicine Dispensing
-                    </h1>
-
-                    <p style={styles.subtitle}>
-                        Dispense medicines and monitor dispensing records.
-                    </p>
+        <div className="min-h-screen bg-slate-100 p-8">
+            {/* Header */}
+            <div className="flex justify-between items-center mb-8">
+                <h1 className="text-5xl font-bold text-slate-900">Dispensing Workflow</h1>
+                <div className="flex gap-4 text-xl">
+                    <span>🔔</span>
+                    <span>⚙️</span>
+                    <span>👤</span>
                 </div>
-
             </div>
 
-            {/* MAIN CONTENT */}
-
-            <div style={styles.mainGrid}>
-
-                {/* LEFT SIDE */}
-
-                <div style={styles.leftSide}>
-
-                    <div style={styles.card}>
-
-                        <div style={styles.cardTop}>
-
-                            <div style={styles.iconBox}>
-                                💊
-                            </div>
-
-                            <div>
-
-                                <h2 style={styles.cardTitle}>
-                                    Dispensing Form
-                                </h2>
-
-                                <p style={styles.cardSub}>
-                                    Fill in medicine details
-                                </p>
-
-                            </div>
-
+            {/* Stepper */}
+            <div className="bg-white rounded-3xl p-8 border mb-8">
+                <div className="flex items-center justify-between">
+                    {/* Step 1 Indicator */}
+                    <div className="flex flex-col items-center">
+                        <div className={`w-16 h-16 rounded-full flex items-center justify-center text-xl font-bold ${currentStep >= 1 ? "bg-blue-800 text-white" : "bg-blue-100 text-blue-800"}`}>
+                            1
                         </div>
-
-                        {
-                            success && (
-                                <div style={styles.success}>
-                                    ✅ {success}
-                                </div>
-                            )
-                        }
-
-                        <form onSubmit={handleSubmit}>
-
-                            <label style={styles.label}>
-                                Resident
-                            </label>
-
-                            <select
-                                name="resident_id"
-                                value={form.resident_id}
-                                onChange={handleChange}
-                                style={styles.input}
-                            >
-
-                                <option value="">
-                                    Select Resident
-                                </option>
-
-                                <option value="1">
-                                    Faith Bagunbon
-                                </option>
-
-                            </select>
-
-                            <label style={styles.label}>
-                                Medicine
-                            </label>
-
-                            <select
-                                name="medicine_id"
-                                value={form.medicine_id}
-                                onChange={(e) => {
-
-                                    handleChange(e);
-
-                                    const stockData = {
-                                        1: 445,
-                                        2: 320,
-                                        3: 1250,
-                                        4: 320
-                                    };
-
-                                    setAvailableStock(
-                                        stockData[e.target.value] || 0
-                                    );
-                                }}
-                                style={styles.input}
-                            >
-
-                                <option value="">
-                                    Select Medicine
-                                </option>
-
-                                <option value="1">
-                                    Losartan 50mg
-                                </option>
-
-                                <option value="2">
-                                    Amlodipine 10mg
-                                </option>
-
-                                <option value="3">
-                                    Paracetamol 500mg
-                                </option>
-
-                                <option value="4">
-                                    Amoxicillin 500mg
-                                </option>
-
-                            </select>
-
-                            <div
-                                style={{
-                                    ...styles.stock,
-                                    background:
-                                        availableStock <= 10
-                                            ? "#fff7ed"
-                                            : "#eff6ff",
-                                    
-                                }}
-                            >
-
-                                
-                                    📦 Available Stock:
-                                
-
-                                {availableStock}
-
-                            </div>
-
-                            <div style={styles.twoColumn}>
-
-                                <div>
-
-                                    <label style={styles.label}>
-                                        Quantity
-                                    </label>
-
-                                    <input
-                                        type="number"
-                                        name="quantity"
-                                        value={form.quantity}
-                                        onChange={handleChange}
-                                        placeholder="Enter quantity"
-                                        style={styles.input}
-                                    />
-
-                                </div>
-
-                                <div>
-
-                                    <label style={styles.label}>
-                                        Dosage
-                                    </label>
-
-                                    <input
-                                        type="text"
-                                        name="dosage"
-                                        value={form.dosage}
-                                        onChange={handleChange}
-                                        placeholder="Example: 1 tablet"
-                                        style={styles.input}
-                                    />
-
-                                </div>
-
-                            </div>
-
-                            <label style={styles.label}>
-                                Instructions
-                            </label>
-
-                            <textarea
-                                name="instructions"
-                                value={form.instructions}
-                                onChange={handleChange}
-                                placeholder="Take after meal"
-                                style={styles.textarea}
-                            />
-
-                            <button
-                                type="submit"
-                                disabled={loading}
-                                style={{
-                                    ...styles.button,
-                                    opacity: loading ? 0.7 : 1,
-                                    cursor:
-                                        loading
-                                            ? "not-allowed"
-                                            : "pointer"
-                                }}
-                            >
-
-                                {
-                                    loading
-                                        ? "Dispensing..."
-                                        : "Dispense Medicine"
-                                }
-
-                            </button>
-
-                        </form>
-
+                        <span className="mt-2 font-semibold">Patient</span>
                     </div>
 
-                </div>
+                    <div className="flex-1 h-[2px] bg-blue-100 mx-4"></div>
 
-                {/* RIGHT SIDE */}
-
-                <div style={styles.rightSide}>
-
-                    <div style={styles.card}>
-
-                        <div style={styles.historyHeader}>
-
-                            <div style={styles.cardTop}>
-
-                                <div style={styles.historyIcon}>
-                                    📋
-                                </div>
-
-                                <div>
-
-                                    <h2 style={styles.cardTitle}>
-                                        Dispensing History
-                                    </h2>
-
-                                    <p style={styles.historySub}>
-                                        Monitor dispensing transactions
-                                    </p>
-
-                                </div>
-
-                            </div>
-
+                    {/* Step 2 Indicator */}
+                    <div className="flex flex-col items-center">
+                        <div className={`w-16 h-16 rounded-full flex items-center justify-center text-xl font-bold ${currentStep >= 2 ? "bg-blue-800 text-white" : "bg-blue-100 text-blue-800"}`}>
+                            2
                         </div>
+                        <span className="mt-2 font-semibold">Medicine</span>
+                    </div>
 
-                        {/* SEARCH */}
+                    <div className="flex-1 h-[2px] bg-blue-100 mx-4"></div>
 
-                        <div style={styles.searchSection}>
+                    {/* Step 3 Indicator */}
+                    <div className="flex flex-col items-center">
+                        <div className={`w-16 h-16 rounded-full flex items-center justify-center text-xl font-bold ${currentStep === 3 ? "bg-blue-800 text-white" : "bg-blue-100 text-blue-800"}`}>
+                            3
+                        </div>
+                        <span className="mt-2 font-semibold">Details</span>
+                    </div>
+                </div>
+            </div>
 
+            {/* ========================================= */}
+            {/* STEP 1: Identify Resident                 */}
+            {/* ========================================= */}
+            {currentStep === 1 && (
+                <div className="bg-white rounded-3xl border p-8 mb-8 shadow-sm">
+                    <h2 className="text-4xl font-bold mb-3">Identify Resident</h2>
+                    <p className="text-slate-500 mb-6">Search the master database to link this dispensing record.</p>
+
+                    <label className="block text-sm font-semibold mb-2">Patient Name or ID</label>
+                    <input
+                        type="text"
+                        value={searchResident}
+                        onChange={(e) => setSearchResident(e.target.value)}
+                        placeholder="Search by name, birthdate, or Patient ID..."
+                        className="w-full border rounded-lg px-4 py-3 mb-6 focus:ring-2 focus:ring-blue-800 outline-none"
+                    />
+
+                    <div className="border rounded-lg overflow-hidden">
+                        <div className="bg-slate-100 px-4 py-3 text-xs font-bold text-slate-500">
+                            RECENT PATIENTS
+                        </div>
+                        {filteredResidents.map((resident, index) => (
+                            <div
+                                key={index}
+                                onClick={() => {
+                                    setSelectedResident(resident);
+                                    setCurrentStep(2); // Move to Step 2 immediately
+                                }}
+                                className="flex justify-between items-center p-4 border-t cursor-pointer hover:bg-slate-50 transition-colors"
+                            >
+                                <div className="flex items-center gap-4">
+                                    <div className="w-12 h-12 rounded-xl text-white font-bold flex items-center justify-center" style={{ backgroundColor: resident.color }}>
+                                        {resident.initials}
+                                    </div>
+                                    <div>
+                                        <div className="font-bold">{resident.name}</div>
+                                        <div className="text-sm text-slate-500">ID: {resident.id} | {resident.purok}</div>
+                                    </div>
+                                </div>
+                                <div className="text-2xl text-slate-400">→</div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            {/* ========================================= */}
+            {/* STEP 2: Select Medicine                   */}
+            {/* ========================================= */}
+            {currentStep === 2 && (
+                <div className="bg-white rounded-3xl border p-8 mb-8 shadow-sm">
+                    <div className="flex justify-between items-center mb-6">
+                        <h2 className="text-4xl font-bold">Select Medicine</h2>
+                        <button onClick={() => setCurrentStep(1)} className="text-blue-600 font-semibold hover:underline">
+                            ← Back to Patient
+                        </button>
+                    </div>
+
+                    {/* Show Selected Resident Summary */}
+                    <div className="mb-6 bg-green-50 border border-green-200 rounded-xl p-4">
+                        <h3 className="font-bold text-green-700 mb-1">Selected Resident</h3>
+                        <p className="font-semibold text-lg">{selectedResident?.name}</p>
+                        <p className="text-sm text-slate-600">ID: {selectedResident?.id} | {selectedResident?.purok}</p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {medicines.map((medicine, index) => (
+                            <div
+                                key={index}
+                                onClick={() => {
+                                    setSelectedMedicine(medicine);
+                                    setCurrentStep(3); // Move to Step 3 immediately
+                                }}
+                                className="border rounded-xl p-5 cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition-all"
+                            >
+                                <div className="font-semibold text-lg mb-1">{medicine.name}</div>
+                                <div className="text-sm text-slate-500">Stock Available: {medicine.stock}</div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            {/* ========================================= */}
+            {/* STEP 3: Dispensing Details                */}
+            {/* ========================================= */}
+            {currentStep === 3 && (
+                <div className="bg-white rounded-3xl border p-8 mb-8 shadow-sm">
+                    <div className="flex justify-between items-center mb-6">
+                        <h2 className="text-4xl font-bold">Dispensing Details</h2>
+                        <button onClick={() => setCurrentStep(2)} className="text-blue-600 font-semibold hover:underline">
+                            ← Back to Medicine
+                        </button>
+                    </div>
+
+                    {/* Summaries */}
+                    <div className="grid grid-cols-2 gap-4 mb-8">
+                        <div className="bg-green-50 border border-green-200 rounded-xl p-4">
+                            <h3 className="font-bold text-green-700 mb-1">Patient</h3>
+                            <p className="font-semibold">{selectedResident?.name}</p>
+                        </div>
+                        <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+                            <h3 className="font-bold text-blue-700 mb-1">Medicine</h3>
+                            <p className="font-semibold">{selectedMedicine?.name} <span className="text-sm font-normal text-slate-500">(Stock: {selectedMedicine?.stock})</span></p>
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-6 mb-8">
+                        <div>
+                            <label className="block mb-2 font-medium">Quantity</label>
+                            <input
+                                type="number"
+                                value={quantity}
+                                onChange={(e) => setQuantity(e.target.value)}
+                                className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-800 outline-none"
+                                placeholder="Enter quantity"
+                            />
+                        </div>
+                        <div>
+                            <label className="block mb-2 font-medium">Dosage</label>
                             <input
                                 type="text"
-                                placeholder="Search resident or medicine..."
-                                value={search}
-                                onChange={(e) =>
-                                    setSearch(e.target.value)
-                                }
-                                style={styles.search}
+                                value={dosage}
+                                onChange={(e) => setDosage(e.target.value)}
+                                className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-800 outline-none"
+                                placeholder="Example: 1 tablet 3x a day"
                             />
-
-                            <select
-                                value={filter}
-                                onChange={(e) =>
-                                    setFilter(e.target.value)
-                                }
-                                style={styles.filter}
-                            >
-
-                                <option value="all">
-                                    All Medicines
-                                </option>
-
-                                <option value="Losartan 50mg">
-                                    Losartan 50mg
-                                </option>
-
-                                <option value="Amlodipine 10mg">
-                                    Amlodipine 10mg
-                                </option>
-
-                                <option value="Paracetamol 500mg">
-                                    Paracetamol 500mg
-                                </option>
-
-                                <option value="Amoxicillin 500mg">
-                                    Amoxicillin 500mg
-                                </option>
-
-                            </select>
-
                         </div>
-
-                        {/* TABLE */}
-
-                        <div style={styles.tableWrapper}>
-
-                            <table style={styles.table}>
-
-                                <thead>
-
-                                    <tr style={styles.tableHead}>
-
-                                        <th style={styles.th}>
-                                            Resident
-                                        </th>
-
-                                        <th style={styles.th}>
-                                            Medicine
-                                        </th>
-
-                                        <th style={styles.th}>
-                                            Quantity
-                                        </th>
-
-                                        <th style={styles.th}>
-                                            Dosage
-                                        </th>
-
-                                        <th style={styles.th}>
-                                            Date
-                                        </th>
-
-                                    </tr>
-
-                                </thead>
-
-                                <tbody>
-
-                                    {
-                                        filteredHistory.length > 0 ? (
-
-                                            filteredHistory.map((item) => (
-
-                                                <tr
-                                                    key={item.id}
-                                                    style={styles.row}
-                                                >
-
-                                                    <td style={styles.td}>
-                                           {
-                                                 item.resident?.full_name ||
-                                                 item.resident?.fullname ||
-                                                 item.resident?.name ||
-                                                      "No Resident"
-                                       }
-                                     </td>
-
-                                                   <td style={styles.td}>
-                                          {
-                                                item.medicine?.medicine_name ||
-                                                item.medicine?.name ||
-                                                      "No Medicine"
-                                           }
-                                       </td>
-
-                                                    <td style={styles.td}>
-                                                        {
-                                                            item.quantity
-                                                        }
-                                                    </td>
-
-                                                    <td style={styles.td}>
-                                                        {
-                                                            item.dosage
-                                                        }
-                                                    </td>
-
-                                                    <td style={styles.td}>
-                                                        {
-                                                            new Date(
-                                                                item.created_at
-                                                            ).toLocaleDateString()
-                                                        }
-                                                    </td>
-
-                                                </tr>
-
-                                            ))
-
-                                        ) : (
-
-                                            <tr>
-
-                                                <td
-                                                    colSpan="5"
-                                                    style={styles.empty}
-                                                >
-                                                    No dispensing records found.
-                                                </td>
-
-                                            </tr>
-
-                                        )
-                                    }
-
-                                </tbody>
-
-                            </table>
-
-                        </div>
-
                     </div>
 
+                    <button
+                        onClick={handleDispense}
+                        className="w-full bg-blue-900 hover:bg-blue-800 text-white py-4 rounded-xl font-bold text-lg transition-colors"
+                    >
+                        Confirm & Dispense Medicine
+                    </button>
                 </div>
+            )}
 
+            {/* Bottom Cards & Records Table */}
+            <div className="grid grid-cols-3 gap-6 mb-8">
+                <div className="col-span-2 bg-white border rounded-2xl p-6">
+                    <div className="flex gap-4">
+                        <div className="text-3xl">📋</div>
+                        <div>
+                            <h3 className="font-bold">Inventory Guardrails</h3>
+                            <p className="text-slate-500 text-sm">
+                                System automatically flags low stock or near-expiry batches to prevent dispensing errors and stockouts.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div className="bg-blue-900 text-white rounded-2xl p-6">
+                    <div className="text-3xl mb-3">↺</div>
+                    <div className="text-4xl font-bold">{records.length + 24}</div>
+                    <div className="text-xs tracking-widest mt-1">DISPENSATIONS TODAY</div>
+                </div>
             </div>
-
         </div>
     );
 }
-
-const styles = {
-
-    page: {
-        background: "#f1f5f9",
-        minHeight: "100vh",
-        padding: "25px",
-        fontFamily: "Arial, sans-serif"
-    },
-
-    topHeader: {
-        marginBottom: "22px"
-    },
-
-    title: {
-        fontSize: "34px",
-        fontWeight: "800",
-        color: "#0f172a",
-        marginBottom: "5px"
-    },
-
-    subtitle: {
-        color: "#64748b",
-        fontSize: "14px"
-    },
-
-    mainGrid: {
-        display: "grid",
-        gridTemplateColumns: "380px 1fr",
-        gap: "20px",
-        alignItems: "start"
-    },
-
-    leftSide: {
-        width: "100%"
-    },
-
-    rightSide: {
-        width: "100%"
-    },
-
-    card: {
-        background: "white",
-        borderRadius: "18px",
-        padding: "22px",
-        border: "1px solid #e2e8f0",
-        boxShadow: "0 3px 12px rgba(0,0,0,0.04)"
-    },
-
-    cardTop: {
-        display: "flex",
-        alignItems: "center",
-        gap: "12px",
-        marginBottom: "18px"
-    },
-
-    iconBox: {
-        width: "48px",
-        height: "48px",
-        borderRadius: "14px",
-        background: "#dbeafe",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontSize: "22px"
-    },
-
-    historyIcon: {
-        width: "48px",
-        height: "48px",
-        borderRadius: "14px",
-        background: "#ede9fe",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontSize: "22px"
-    },
-
-    cardTitle: {
-        fontSize: "22px",
-        fontWeight: "700",
-        color: "#0f172a",
-        marginBottom: "3px"
-    },
-
-    cardSub: {
-        color: "#64748b",
-        fontSize: "13px"
-    },
-
-    historySub: {
-        color: "#64748b",
-        fontSize: "13px"
-    },
-
-    success: {
-        background: "#dcfce7",
-        color: "#166534",
-        padding: "12px",
-        borderRadius: "10px",
-        marginBottom: "18px",
-        fontWeight: "600",
-        fontSize: "13px"
-    },
-
-    label: {
-        display: "block",
-        marginBottom: "8px",
-        marginTop: "14px",
-        fontWeight: "600",
-        color: "#334155",
-        fontSize: "13px"
-    },
-
-    input: {
-        width: "100%",
-        padding: "12px 14px",
-        borderRadius: "12px",
-        border: "1px solid #dbe2ea",
-        fontSize: "14px",
-        outline: "none",
-        background: "#fff",
-        boxSizing: "border-box"
-    },
-
-    textarea: {
-        width: "100%",
-        height: "110px",
-        padding: "14px",
-        borderRadius: "12px",
-        border: "1px solid #dbe2ea",
-        fontSize: "14px",
-        resize: "none",
-        outline: "none",
-        boxSizing: "border-box"
-    },
-
-    stock: {
-        padding: "13px",
-        borderRadius: "12px",
-        marginTop: "16px",
-        fontWeight: "700",
-        fontSize: "14px"
-    },
-
-    twoColumn: {
-        display: "grid",
-        gridTemplateColumns: "1fr 1fr",
-        gap: "12px"
-    },
-
-    button: {
-        width: "100%",
-        padding: "14px",
-        marginTop: "22px",
-        borderRadius: "12px",
-        border: "none",
-        background: "#2563eb",
-        color: "white",
-        fontWeight: "700",
-        fontSize: "15px",
-        boxShadow: "0 4px 10px rgba(37,99,235,0.25)"
-    },
-
-    historyHeader: {
-        marginBottom: "18px"
-    },
-
-    searchSection: {
-        display: "flex",
-        gap: "10px",
-        marginBottom: "18px"
-    },
-
-    search: {
-        flex: 1,
-        padding: "12px",
-        borderRadius: "10px",
-        border: "1px solid #dbe2ea",
-        fontSize: "13px",
-        outline: "none"
-    },
-
-    filter: {
-        padding: "12px",
-        borderRadius: "10px",
-        border: "1px solid #dbe2ea",
-        fontSize: "13px",
-        outline: "none",
-        background: "white"
-    },
-
-    tableWrapper: {
-        overflowX: "auto",
-        maxHeight: "620px",
-        overflowY: "auto",
-        borderRadius: "14px",
-        border: "1px solid #e2e8f0"
-    },
-
-    table: {
-        width: "100%",
-        borderCollapse: "collapse",
-        background: "white"
-    },
-
-    tableHead: {
-        background: "#2563eb",
-        color: "white",
-        position: "sticky",
-        top: 0
-    },
-
-    th: {
-        padding: "14px",
-        textAlign: "left",
-        fontSize: "13px",
-        fontWeight: "700"
-    },
-
-    td: {
-        padding: "14px",
-        borderBottom: "1px solid #f1f5f9",
-        fontSize: "13px",
-        color: "#334155"
-    },
-
-    row: {
-        background: "white"
-    },
-
-    empty: {
-        textAlign: "center",
-        padding: "20px",
-        color: "#64748b",
-        fontSize: "13px"
-    }
-};

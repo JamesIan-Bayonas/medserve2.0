@@ -33,19 +33,18 @@
 </a>
         </li>
 
-    <li class="nav-item mb-2">
-    <a href="/medicine-dispensing" class="nav-link text-white">
-        Medicine Dispensing
-    </a>
-</li>
+<a href="/medicine-dispensing" class="sidebar-link">
+    <i class="fa-solid fa-hand-holding-medical"></i>
+    <span>Medicine Dispensing</span>
+</a>
 
         <li class="nav-item mb-2">
             <a href="#" class="nav-link text-white">Staff Management</a>
         </li>
 
-      <li class="nav-item mb-2">
-            <a href="#" class="nav-link text-white">Reports</a>
-        </li>
+        <a href="{{ route('reports.index') }}" class="nav-link">
+            Reports
+        </a>
 
         <li class="nav-item mb-2">
             <a href="#" class="nav-link text-white">Audit Logs</a>
