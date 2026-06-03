@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
         // Seed Medicines
         $this->call([
             MedicineSeeder::class,
+            UserSeeder::class
         ]);
     }
 }
