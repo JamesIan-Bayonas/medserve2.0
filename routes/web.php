@@ -10,6 +10,7 @@ use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\ResidentController;
 use App\Http\Controllers\StaffDashboardController;
 use App\Http\Controllers\MedicineDispensingController;
+use App\Http\Controllers\CheckupController;
 
 Route::get('/', function () {
     return redirect('/login');
@@ -88,6 +89,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/medicine-dispensing', [MedicineDispensingController::class, 'store']);
     Route::resource('residents', ResidentController::class);
+
+    Route::resource('checkups', CheckupController::class);
 
 });
 

@@ -30,12 +30,21 @@ export default function AuthenticatedLayout({ header, children }) {
                                 </Link>
                             </div>
 
+                            {/* ====== 1. DESKTOP NAVIGATION LINKS ====== */}
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink
                                     href={route('dashboard')}
                                     active={route().current('dashboard')}
                                 >
                                     Dashboard
+                                </NavLink>
+
+                                {/* PLUGGED IN: Checkup Entry Tab Option */}
+                                <NavLink
+                                    href={route('checkups.create')}
+                                    active={route().current('checkups.create')}
+                                >
+                                    Checkup Entry
                                 </NavLink>
                             </div>
 
@@ -111,6 +120,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                     stroke="currentColor"
                                     fill="none"
                                     viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
                                 >
 
                                     <path
@@ -154,8 +164,8 @@ export default function AuthenticatedLayout({ header, children }) {
                     }
                 >
 
+                    {/* ====== 2. MOBILE RESPONSIVE LINKS ====== */}
                     <div className="space-y-1 pb-3 pt-2">
-
                         <ResponsiveNavLink
                             href={route('dashboard')}
                             active={route().current('dashboard')}
@@ -163,6 +173,13 @@ export default function AuthenticatedLayout({ header, children }) {
                             Dashboard
                         </ResponsiveNavLink>
 
+                        {/* PLUGGED IN: Mobile Checkup Entry Trigger */}
+                        <ResponsiveNavLink
+                            href={route('checkups.create')}
+                            active={route().current('checkups.create')}
+                        >   
+                            Checkup Entry
+                        </ResponsiveNavLink>
                     </div>
 
                     <div className="border-t border-gray-200 pb-1 pt-4">
@@ -185,7 +202,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                 method="post"
                                 href={route('logout')}
                                 as="button"
-                            >
+                             >
                                 Log Out
                             </ResponsiveNavLink>
 
