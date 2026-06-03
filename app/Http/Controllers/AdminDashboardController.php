@@ -59,7 +59,7 @@ class AdminDashboardController extends Controller
             ->get();
 
         // 4. Return everything to your Inertia React Component
-        return Inertia::render('Admin/Dashboard', [
+        return Inertia::render('Dashboard', [
             // Structural Counts
             'totalResidents'        => $totalResidents,
             'totalStaff'            => $totalStaff,
