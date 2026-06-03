@@ -37,7 +37,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/create-staff', function () {
         return Inertia::render('Admin/CreateStaff');
     })->middleware('admin')->name('admin.create-staff');
-
+    
     Route::post('/admin/create-staff', [StaffController::class, 'store'])
         ->middleware('admin')->name('admin.store-staff');
 
@@ -68,7 +68,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('residents', ResidentController::class);
 
     Route::resource('checkups', CheckupController::class);
-    
 });
 
 require __DIR__.'/auth.php';
