@@ -9,29 +9,21 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-   public function up()
-{
-    Schema::create('residents', function (Blueprint $table) {
-
-        $table->id();
-
-        $table->string('full_name');
-
-        $table->integer('age');
-
-        $table->string('gender')->nullable();
-
-        $table->string('address')->nullable();
-
-        $table->string('contact_number')->nullable();
-
-        $table->float('height')->nullable();
-
-        $table->float('weight')->nullable();
-
-        $table->timestamps();
-    });
-}
+    public function up(): void
+    {
+        Schema::create('residents', function (Blueprint $table) {
+            $table->id();
+            $table->string('full_name');
+            $table->string('email')->unique()->nullable(); // Merged from the generic blueprint
+            $table->integer('age');
+            $table->string('gender')->nullable();
+            $table->string('address')->nullable();
+            $table->string('contact_number')->nullable(); // Serves as 'phone'
+            $table->float('height')->nullable();
+            $table->float('weight')->nullable();
+            $table->timestamps();
+        });
+    }
 
     /**
      * Reverse the migrations.
