@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-
 use Illuminate\Database\Eloquent\Model;
 
 class MedicineBatch extends Model
@@ -22,12 +21,9 @@ class MedicineBatch extends Model
         'quantity_received',
         'quantity_remaining',
     ];
-
-
     // Ensuring dates are treated as Carbon instances makes our expiration logic much easier
     protected $casts = [
         'date_received' => 'date',
         'expiration_date' => 'date',
     ];
-
 }
