@@ -1,15 +1,16 @@
 <?php
 
+use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\MedicineBatchController;
+use App\Http\Controllers\MedicineDispensingController;
+use App\Http\Controllers\CheckupController;
+use App\Http\Controllers\ResidentController;
+use App\Http\Controllers\StaffController;
+use App\Http\Controllers\StaffDashboardController;
 use App\Models\MedicineBatch;
 use Carbon\Carbon;
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\StaffController;
-use App\Models\User;
-use App\Http\Controllers\AdminDashboardController;
-use App\Http\Controllers\ResidentController;
-use App\Http\Controllers\StaffDashboardController;
-use App\Http\Controllers\MedicineDispensingController;
+use Inertia\Inertia;
 
 Route::get('/', function () {
     return redirect('/login');
@@ -19,76 +20,81 @@ Route::middleware(['auth'])->group(function () {
 
     /*
     |--------------------------------------------------------------------------
-    | STAFF DASHBOARD
+    | DASHBOARD REDIRECTOR & ALERTS MANAGEMENT
     |--------------------------------------------------------------------------
-    |*/
-    Route::get('/staff/dashboard', [StaffDashboardController::class, 'index'])
-        ->name('staff.dashboard');
+    */
+    Route::get('/dashboard', function () {
+        // Fetches low stock items from your SQLite table (20 or fewer remaining)
+        $lowStock = MedicineBatch::where('quantity_remaining', '<=', 20)
+            ->where('quantity_remaining', '>', 0)
+            ->orderBy('quantity_remaining', 'asc')
+            ->get();
 
+        // Fetches expiring items within 30 days
+        $expiring = MedicineBatch::where('expiration_date', '<=', Carbon::now()->addDays(30))
+            ->where('quantity_remaining', '>', 0)
+            ->orderBy('expiration_date', 'asc')
+            ->get();
+
+        // Renders the main Dashboard and passes the exact keys your React component expects
+        return Inertia::render('Dashboard', [
+            'totalResidents' => 0,
+            'pendingImmunizations' => 0,
+            'residents' => [],
+            'dispensedMedicines' => [],
+            'announcements' => [],
+            'alerts' => [],
+            'lowStockBatches' => $lowStock,
+            'expiringBatches' => $expiring,
+        ]);
+    })->name('dashboard');
 
     /*
     |--------------------------------------------------------------------------
-    | ADMIN DASHBOARD
+    | ADMIN MODULES
     |--------------------------------------------------------------------------
-    |*/
-    // Redirect standard /dashboard down to the specific admin panel
-
-    Route::get('/staff/dashboard', [StaffDashboardController::class, 'index'])
-        ->name('staff.dashboard');
-
-    Route::get('/dashboard', function () {
-        return redirect('/admin/dashboard');
-    })->name('dashboard');
-
-    // Controller-driven endpoint for the real admin view
+    */
+    // Controller handles the data query logic, completely eliminating inline closures for secondary states!
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])
         ->name('admin.dashboard');
 
-    // Kept your Admin staff creation features from the HEAD changes!
     Route::get('/admin/create-staff', function () {
         return Inertia::render('Admin/CreateStaff');
     })->middleware('admin')->name('admin.create-staff');
-
+    
     Route::post('/admin/create-staff', [StaffController::class, 'store'])
         ->middleware('admin')->name('admin.store-staff');
 
+    Route::get('/admin/reports', function () {
+        return view('admin.reports');
+    })->name('reports.index');
 
     /*
     |--------------------------------------------------------------------------
-    | INVENTORY
+    | STAFF MODULES
     |--------------------------------------------------------------------------
-    |*/
-    Route::get('/inventory', function () {
-        return view('inventory');
-    })->name('inventory');
-
+    */
+    Route::get('/staff/dashboard', [StaffDashboardController::class, 'index'])
+        ->name('staff.dashboard');
 
     /*
     |--------------------------------------------------------------------------
-    | MEDICINE BATCHES
+    | MEDICAL LOGISTICS & WORKFLOWS (PURE INERTIA/REACT REPO PATHS)
     |--------------------------------------------------------------------------
-    |*/
-        Route::get('/admin/reports', function () {
-            return view('admin.reports');
-        })->name('reports.index');
-
+    */
     Route::get('/medicine-batches-page', function () {
         return Inertia::render('MedicineBatches');
     })->name('medicine.batches');
 
-    
-    /*
-    |--------------------------------------------------------------------------
-    | RESIDENTS
-    |--------------------------------------------------------------------------
-    |*/
     Route::get('/medicine-dispensing', function () {
         return Inertia::render('MedicineDispensing');
     })->name('medicine.dispensing');
 
     Route::post('/medicine-dispensing', [MedicineDispensingController::class, 'store']);
+    
+    // Clean resource endpoints for residents and checkups management panels
     Route::resource('residents', ResidentController::class);
-
+    Route::resource('checkups', CheckupController::class);
 });
 
 require __DIR__.'/auth.php';
