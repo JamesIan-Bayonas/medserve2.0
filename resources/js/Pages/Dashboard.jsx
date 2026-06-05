@@ -16,11 +16,11 @@ import {
 
 export default function Dashboard({
     residents = [],
-    totalResidents,
-    pendingImmunizations,
-    dispensedMedicines,
-    alerts,
-    lowStockBatches = [], // Catching incoming database arrays cleanly
+    totalResidents = 0,
+    pendingImmunizations = 0,
+    dispensedMedicines = [],
+    alerts = [],
+    lowStockBatches = [], 
     expiringBatches = []
 }) {
     const { auth } = usePage().props;
@@ -29,9 +29,13 @@ export default function Dashboard({
     const [showNotifications, setShowNotifications] = useState(false);
     const [search, setSearch] = useState('');
     
-    // Added safety fallback in case residents is undefined
+    // Diagnostics loop for telemetry validation
+    console.log("Low Stock Array:", lowStockBatches);
+    console.log("Expiring Array:", expiringBatches);
+
+    // HEAD defensive fallback logic + main's safe navigation parameter check
     const filteredResidents = residents?.filter((resident) =>
-        resident.name.toLowerCase().includes(search.toLowerCase())
+        resident.name?.toLowerCase().includes(search.toLowerCase())
     ) || [];
 
     return (
@@ -40,74 +44,108 @@ export default function Dashboard({
 
             <div className="flex min-h-screen bg-[#f5f7fb]">
 
-                {/* ======================================= */}
-                {/* SIDEBAR                                 */}
-                {/* ======================================= */}
+                {/* SIDEBAR NAVIGATION WORKSPACE */}
                 <div className="w-[250px] bg-white border-r border-gray-200 flex flex-col justify-between">
                     <div>
                         <div className="p-6">
-                            <h1 className="text-3xl font-bold mb-2">MedServe</h1>
+                            <h1 className="text-3xl font-bold mb-2 text-gray-900">MedServe</h1>
                             <p className="text-gray-500 text-sm mb-8">Clinical Management</p>
                         </div>
 
                         <nav className="px-4 space-y-6">
                             {/* Dashboard */}
-                            <a href="/dashboard" className="flex items-center gap-3 px-4 py-3 rounded-xl bg-blue-50 text-blue-600 font-semibold">
-                                <LayoutDashboard size={18} />
-                                Dashboard
-                            </a>
-
-                            {/* Residents */}
                             <div>
-                                <p className="text-[11px] uppercase tracking-[1px] text-gray-400 font-semibold mb-3 px-2">Residents</p>
-                                <a href="#" className="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50 transition">
+                                <a 
+                                    href="/dashboard" 
+                                    className="flex items-center gap-3 px-4 py-3 rounded-xl bg-blue-50 text-blue-600 font-semibold"
+                                >
+                                    <LayoutDashboard size={18} />
+                                    Dashboard
+                                </a>
+                            </div>
+
+                            {/* Residents Management */}
+                            <div>
+                                <p className="text-[11px] uppercase tracking-[1px] text-gray-400 font-semibold mb-3 px-2">
+                                    Residents
+                                </p>
+                                <a 
+                                    href="#" 
+                                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50 transition"
+                                >
                                     <Users size={18} /> Residents List
                                 </a>
-                                <a href="#" className="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50 transition">
+                                <a 
+                                    href="#" 
+                                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50 transition"
+                                >
                                     <CalendarDays size={18} /> Visit History
                                 </a>
                             </div>
 
-                            {/* Medicine */}
+                            {/* Medicine Management */}
                             <div>
-                                <p className="text-[11px] uppercase tracking-[1px] text-gray-400 font-semibold mb-3 px-2">Medicine Management</p>
-                                <a href="/medicine-batches-page" className="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50 transition">
+                                <p className="text-[11px] uppercase tracking-[1px] text-gray-400 font-semibold mb-3 px-2">
+                                    Medicine Management
+                                </p>
+                                <a 
+                                    href="/medicine-batches-page" 
+                                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50 transition"
+                                >
                                     <Package size={18} /> Inventory
                                 </a>
-                                <a href="/medicine-dispensing" className="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50 transition">
+                                <a 
+                                    href="/medicine-dispensing" 
+                                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50 transition"
+                                >
                                     <Pill size={18} /> Dispensation
                                 </a>
                             </div>
 
-                            {/* Settings */}
+                            {/* Utility Configuration */}
                             <div>
-                                <p className="text-[11px] uppercase tracking-[1px] text-gray-400 font-semibold mb-3 px-2">Settings</p>
-                                <a href="/settings" className="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50 transition">
+                                <p className="text-[11px] uppercase tracking-[1px] text-gray-400 font-semibold mb-3 px-2">
+                                    Settings
+                                </p>
+                                <a 
+                                    href="/settings" 
+                                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50 transition"
+                                >
                                     <Settings size={18} /> System Settings
                                 </a>
                             </div>
                         </nav>
                     </div>
+
+                    {/* Admin Access Panel Guard (Bottom Sidebar Anchor) */}
+                    {user.role === 'admin' && (
+                        <div className="p-4 m-4 bg-blue-100 border border-blue-200 rounded-xl shadow-sm">
+                            <h2 className="font-bold text-xl mb-1 text-blue-900">
+                                Admin Panel
+                            </h2>
+                            <p className="mb-4 text-xs text-blue-800">
+                                Only admins can create staff accounts.
+                            </p>
+                        </div>
+                    )}
                 </div>
 
-                {/* ======================================= */}
-                {/* MAIN CONTENT AREA                       */}
-                {/* ======================================= */}
+                {/* MAIN RUNTIME CONTENT VIEWPORT */}
                 <div className="flex-1 px-8 py-8">
                     
-                    {/* Header */}
+                    {/* SYSTEM HEADER CONTROL BAR */}
                     <div className="mb-8 flex justify-between items-start">
                         <div>
                             <h1 className="text-3xl font-bold mb-2 text-gray-900">Welcome, {user.name}</h1>
-                            <p className="text-gray-600">Role: <span className="font-semibold capitalize">{user.role}</span></p>
+                            <p className="text-gray-600">Role: <span className="font-semibold capitalize text-blue-600">{user.role}</span></p>
                         </div>
                         
-                        {/* Admin Action Panel (Moved to top right for better UI flow) */}
+                        {/* Admin Action Control Hub (Top-Right Layout Alignment) */}
                         {user.role === 'admin' && (
                             <div className="flex gap-4 items-center">
                                 <Link
                                     href={route('admin.create-staff')}
-                                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition text-sm font-medium"
+                                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition text-sm font-medium shadow-xs"
                                 >
                                     + Add Staff
                                 </Link>
@@ -115,7 +153,7 @@ export default function Dashboard({
                                     href={route('logout')}
                                     method="post"
                                     as="button"
-                                    className="bg-red-50 hover:bg-red-100 text-red-600 px-4 py-2 rounded-lg transition text-sm font-medium border border-red-200"
+                                    className="bg-red-50 hover:bg-red-100 text-red-600 px-4 py-2 rounded-lg transition text-sm font-medium border border-red-200 shadow-2xs"
                                 >
                                     Log Out
                                 </Link>
@@ -123,12 +161,10 @@ export default function Dashboard({
                         )}
                     </div>
 
-                    {/* ======================================= */}
-                    {/* ACTIVE STOCK ALERTS WORKSPACE           */}
-                    {/* ======================================= */}
+                    {/* TWO-COLUMN QUANTITY AND METRIC WIDGET GRID */}
                     <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
                         
-                        {/* Low Stock Alerts */}
+                        {/* LOW QUANTITY TRACKING COMPONENT */}
                         <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
                             <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
                                 <Package size={20} className="text-amber-500" />
@@ -155,7 +191,7 @@ export default function Dashboard({
                             )}
                         </div>
 
-                        {/* Expiring Soon Alerts */}
+                        {/* NEAR EXPIRATION ALIGNMENT PANEL */}
                         <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
                             <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
                                 <CalendarDays size={20} className="text-red-500" />
@@ -184,6 +220,7 @@ export default function Dashboard({
 
                     </div>
                 </div>
+
             </div>
         </AuthenticatedLayout>
     );
