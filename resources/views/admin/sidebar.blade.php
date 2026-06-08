@@ -5,8 +5,10 @@
     <ul class="nav flex-column">
 
         <li class="nav-item mb-2">
-            <a href="#" class="nav-link text-white">Dashboard</a>
-        </li>
+    <a href="/admin/dashboard" class="nav-link text-white">
+        Dashboard
+    </a>
+</li>
 
         <li class="nav-item mb-2">
             <a href="#" class="nav-link text-white">Residents</a>

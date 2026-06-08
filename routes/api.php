@@ -3,7 +3,6 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DispensationController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\MedicineBatchController;
@@ -18,7 +17,7 @@ use App\Http\Controllers\MedicineBatchController;
 // PUBLIC AUTH ROUTES
 // ========================================
 
-Route::post('/login', [AuthController::class, 'login']);
+//Route::post('/login', [AuthController::class, 'login']);
 
 // ========================================
 // MEDICINE INVENTORY API
@@ -61,7 +60,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     });
 
-    Route::post('/logout', [AuthController::class, 'logout']);
+   // Route::post('/logout', [AuthController::class, 'logout']);
 
     // =========================
     // DISPENSATION
