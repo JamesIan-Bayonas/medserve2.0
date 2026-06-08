@@ -12,52 +12,15 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+
 Route::get('/', function () {
     return redirect('/login');
 });
 
 Route::middleware(['auth'])->group(function () {
 
-    /*
-    |--------------------------------------------------------------------------
-    | DASHBOARD REDIRECTOR & ALERTS MANAGEMENT
-    |--------------------------------------------------------------------------
-    */
-    Route::get('/dashboard', function () {
-        // Fetches low stock items from your SQLite table (20 or fewer remaining)
-        $lowStock = MedicineBatch::where('quantity_remaining', '<=', 20)
-            ->where('quantity_remaining', '>', 0)
-            ->orderBy('quantity_remaining', 'asc')
-            ->get();
-
-        // Fetches expiring items within 30 days
-        $expiring = MedicineBatch::where('expiration_date', '<=', Carbon::now()->addDays(30))
-            ->where('quantity_remaining', '>', 0)
-            ->orderBy('expiration_date', 'asc')
-            ->get();
-
-        // Renders the main Dashboard and passes the exact keys your React component expects
-        return Inertia::render('Dashboard', [
-            'totalResidents' => 0,
-            'pendingImmunizations' => 0,
-            'residents' => [],
-            'dispensedMedicines' => [],
-            'announcements' => [],
-            'alerts' => [],
-            'lowStockBatches' => $lowStock,
-            'expiringBatches' => $expiring,
-        ]);
-    })->name('dashboard');
-
-    /*
-    |--------------------------------------------------------------------------
-    | ADMIN MODULES
-    |--------------------------------------------------------------------------
-    */
-    // Controller handles the data query logic, completely eliminating inline closures for secondary states!
-    Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])
-        ->name('admin.dashboard');
-
+   Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])
+    ->name('admin.dashboard');
     Route::get('/admin/create-staff', function () {
         return Inertia::render('Admin/CreateStaff');
     })->middleware('admin')->name('admin.create-staff');
@@ -85,6 +48,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/medicine-batches-page', function () {
         return Inertia::render('MedicineBatches');
     })->name('medicine.batches');
+    Route::get('/inventory', function () {
+    return view('inventory');
+});
 
     Route::get('/medicine-dispensing', function () {
         return Inertia::render('MedicineDispensing');

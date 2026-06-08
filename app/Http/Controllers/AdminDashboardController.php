@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use Inertia\Inertia; // Switched to Inertia for React frontend delivery
 
 // Models
 use App\Models\Resident;
@@ -59,13 +58,13 @@ class AdminDashboardController extends Controller
             ->get();
 
         // 4. Return everything to your Inertia React Component
-        return Inertia::render('Admin/Dashboard', [
+        return view('admin.dashboard', [
             // Structural Counts
             'totalResidents'        => $totalResidents,
             'totalStaff'            => $totalStaff,
             'totalMedicines'        => $totalMedicines,
             'lowStockCount'         => $lowStockCount,
-            'expiringMedicinesCount'=> $expiringMedicinesCount,
+            'expiringMedicines' => $expiringMedicinesCount,
             'immunizationSchedules' => $immunizationSchedules,
 
             // Preview Collections
