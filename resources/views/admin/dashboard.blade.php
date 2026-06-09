@@ -655,7 +655,7 @@ color:#1e3a5f;
                 Dashboard
             </a>
 
-            <a href="#">
+            <a href="/residents">
                 <i class="fa fa-users"></i>
                 Residents
             </a>
@@ -809,11 +809,10 @@ color:#1e3a5f;
 
 <div class="quick-actions">
 
-    <button class="action-btn btn-blue">
-        <i class="fa fa-user-plus"></i>
-        Add Resident
-    </button>
-
+<a href="{{ route('residents.create') }}" class="action-btn btn-blue">
+    <i class="fa fa-user-plus"></i>
+    Add Resident
+</a>
     <button class="action-btn btn-green">
         <i class="fa fa-pills"></i>
         Add Medicine

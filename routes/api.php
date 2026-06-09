@@ -3,7 +3,6 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\DispensationController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\MedicineBatchController;
 
@@ -68,7 +67,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::middleware('role:Admin|Health Worker')->group(function () {
 
-        Route::post('/dispense', [DispensationController::class, 'store']);
+       
 
     });
 
