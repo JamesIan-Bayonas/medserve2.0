@@ -69,12 +69,12 @@ export default function Dashboard({
                                 <p className="text-[11px] uppercase tracking-[1px] text-gray-400 font-semibold mb-3 px-2">
                                     Residents
                                 </p>
-                                <a 
-                                    href="#" 
+                                <Link
+                                    href="/residents"
                                     className="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50 transition"
                                 >
                                     <Users size={18} /> Residents List
-                                </a>
+                                </Link>
                                 <a 
                                     href="#" 
                                     className="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50 transition"

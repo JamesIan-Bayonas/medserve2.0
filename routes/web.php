@@ -12,15 +12,21 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-
+// --- KANI ANG GI-USAB PARA DILI MAG-LOOP ---
 Route::get('/', function () {
+    if (auth()->check()) {
+        // Kung ang naka-login kay Admin, i-redirect sa admin dashboard
+        // Pwede rasad nimo butangan og role checking diri puhon kung naay usab
+        return redirect('/admin/dashboard');
+    }
     return redirect('/login');
 });
 
 Route::middleware(['auth'])->group(function () {
 
-   Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])
-    ->name('admin.dashboard');
+    Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])
+        ->name('admin.dashboard');
+        
     Route::get('/admin/create-staff', function () {
         return Inertia::render('Admin/CreateStaff');
     })->middleware('admin')->name('admin.create-staff');
@@ -48,9 +54,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/medicine-batches-page', function () {
         return Inertia::render('MedicineBatches');
     })->name('medicine.batches');
+    
     Route::get('/inventory', function () {
-    return view('inventory');
-});
+        return view('inventory');
+    });
 
     Route::get('/medicine-dispensing', function () {
         return Inertia::render('MedicineDispensing');
