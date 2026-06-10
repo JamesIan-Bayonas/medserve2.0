@@ -13,16 +13,32 @@ return new class extends Migration
     {
         Schema::create('checkups', function (Blueprint $table) {
             $table->id();
-            
-            // Creates 'resident_id' and automatically links it to the 'id' on the 'residents' table
-            $table->foreignId('resident_id')->constrained()->onDelete('cascade');
-            
-            // Health metrics (nullable in case some checkups don't record everything)
+
+            // Resident Reference
+            $table->foreignId('resident_id')
+                ->constrained()
+                ->onDelete('cascade');
+
+            // Checkup Information
+            $table->date('checkup_date');
+
+            // Vital Signs
             $table->string('blood_pressure')->nullable();
-            $table->decimal('temperature', 5, 2)->nullable(); // e.g. 36.50
-            $table->decimal('weight', 5, 2)->nullable(); // e.g. 70.50
+            $table->decimal('temperature', 5, 2)->nullable();
+            $table->decimal('weight', 5, 2)->nullable();
+            $table->decimal('height', 5, 2)->nullable();
+
+            // Consultation Details
+            $table->text('reason_for_visit')->nullable();
+            $table->text('assessment')->nullable();
+
+            // Treatment
+            $table->text('medicine_given')->nullable();
+            $table->text('action_taken')->nullable();
+
+            // Additional Notes
             $table->text('notes')->nullable();
-            
+
             $table->timestamps();
         });
     }
