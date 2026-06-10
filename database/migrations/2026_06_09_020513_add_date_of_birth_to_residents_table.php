@@ -12,7 +12,9 @@ return new class extends Migration
 public function up(): void
 {
     Schema::table('residents', function (Blueprint $table) {
-        $table->date('birthday')->nullable()->after('age');
+        $table->date('date_of_birth')->nullable()->after('age');
+
+        $table->string('guardian_name')->nullable()->after('contact_number');
     });
 }
 
@@ -22,7 +24,10 @@ public function up(): void
     public function down(): void
     {
      Schema::table('residents', function (Blueprint $table) {
-    $table->dropColumn('date_of_birth');
+    $table->dropColumn([
+    'date_of_birth',
+    'guardian_name'
+    ]);
     });
     }
 };
