@@ -18,6 +18,7 @@ export default function MedicineBatchesPage() {
     // STATES
     const [batches, setBatches] = useState([]);
     const [filteredBatches, setFilteredBatches] = useState([]);
+    const [medicines, setMedicines] = useState([]);
     const [search, setSearch] = useState("");
     const [filterExpired, setFilterExpired] = useState(false);
     const [editingId, setEditingId] = useState(null);
@@ -33,9 +34,10 @@ export default function MedicineBatchesPage() {
     });
 
     // FETCH
-    useEffect(() => {
-        fetchBatches();
-    }, []);
+ useEffect(() => {
+    fetchBatches();
+    fetchMedicines();
+}, []);
 
     // FETCH BATCHES
     const fetchBatches = async () => {
@@ -54,6 +56,17 @@ export default function MedicineBatchesPage() {
         }
     };
 
+    const fetchMedicines = async () => {
+    try {
+        const response = await axios.get("/api/medicines");
+
+        setMedicines(response.data.data);
+
+    } catch (error) {
+        console.error(error);
+        alert("Failed to fetch medicines");
+    }
+};
     // SUBMIT
     const handleSubmit = async (e) => {
 
@@ -644,19 +657,51 @@ export default function MedicineBatchesPage() {
                         </h2>
 
                         <form onSubmit={handleSubmit}>
+                    <div style={{ marginBottom: "16px" }}>
 
-                            <InputField
-                                label="Medicine ID"
-                                value={form.medicine_id}
-                                onChange={(e) =>
-                                    setForm({
-                                        ...form,
-                                        medicine_id:
-                                            e.target.value,
-                                    })
-                                }
-                            />
+                        <label
+                            style={{
+                                display: "block",
+                                marginBottom: "8px",
+                                fontWeight: "700",
+                                fontSize: "14px",
+                            }}
+                        >
+                            Medicine
+                        </label>
 
+                        <select
+                            value={form.medicine_id}
+                            onChange={(e) =>
+                                setForm({
+                                    ...form,
+                                    medicine_id: e.target.value,
+                                })
+                            }
+                            style={{
+                                width: "100%",
+                                height: "46px",
+                                borderRadius: "14px",
+                                border: "1px solid #d7dee7",
+                                padding: "0 14px",
+                                outline: "none",
+                            }}
+                        >
+                            <option value="">
+                                Select Medicine
+                            </option>
+
+                            {medicines.map((medicine) => (
+                                <option
+                                    key={medicine.id}
+                                    value={medicine.id}
+                                >
+                                    {medicine.code} - {medicine.name}
+                                </option>
+                            ))}
+                        </select>
+
+                    </div>
                             <InputField
                                 label="Batch Number"
                                 value={form.batch_number}
@@ -850,7 +895,7 @@ export default function MedicineBatchesPage() {
                                     }}
                                 >
                                     <Th>BATCH</Th>
-                                    <Th>MEDICINE ID</Th>
+                                    <Th>MEDICINE</Th>
                                     <Th>DATE RECEIVED</Th>
                                     <Th>EXPIRATION</Th>
                                     <Th>QTY RECEIVED</Th>
@@ -878,18 +923,21 @@ export default function MedicineBatchesPage() {
                                                 {batch.batch_number}
                                             </Td>
 
-                                            <Td>
-                                                {batch.medicine_id}
+                                          <Td>
+                                                {medicines.find(
+                                                    (m) => m.id == batch.medicine_id
+                                                )?.name || batch.medicine_id}
+                                            </Td>
+
+                                           <Td>
+                                                {new Date(batch.date_received)
+                                                    .toLocaleDateString()}
                                             </Td>
 
                                             <Td>
-                                                {batch.date_received}
+                                                {new Date(batch.expiration_date)
+                                                    .toLocaleDateString()}
                                             </Td>
-
-                                            <Td>
-                                                {batch.expiration_date}
-                                            </Td>
-
                                             <Td>
                                                 {batch.quantity_received}
                                             </Td>

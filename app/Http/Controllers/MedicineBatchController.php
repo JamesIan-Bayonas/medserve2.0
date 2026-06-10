@@ -3,22 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\MedicineBatch;
+use App\Models\Medicine;
 use Illuminate\Http\Request;
+
 
 class MedicineBatchController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
-    | FETCH ALL BATCHES
+    | FETCH ALL BATCHES & MEDICINES
     |--------------------------------------------------------------------------
     */
-    public function index()
-    {
-        return response()->json(
-            MedicineBatch::latest()->get()
-        );
-    }
 
+public function index()
+{
+    return response()->json(
+        MedicineBatch::all()
+    );
+}
     /*
     |--------------------------------------------------------------------------
     | STORE NEW BATCH
