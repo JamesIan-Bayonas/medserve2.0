@@ -1,26 +1,26 @@
 import React, { useState, useMemo } from 'react';
 import { useForm, Head, Link } from '@inertiajs/react';
 
-export default function Create({ residents }) {
+export default function Edit({ checkup, residents }) {
     // State for the search bar
     const [searchQuery, setSearchQuery] = useState('');
 
-    const { data, setData, post, processing, errors } = useForm({
-        resident_id: '',
-        checkup_date: '',
+    const { data, setData, put, processing, errors } = useForm({
+        resident_id: checkup.resident_id || '',
+        checkup_date: checkup.checkup_date || '',
 
-        blood_pressure: '',
-        temperature: '',
-        weight: '',
-        height: '',
+        blood_pressure: checkup.blood_pressure || '',
+        temperature: checkup.temperature || '',
+        weight: checkup.weight || '',
+        height: checkup.height || '',
 
-        reason_for_visit: '',
-        assessment: '',
+        reason_for_visit: checkup.reason_for_visit || '',
+        assessment: checkup.assessment || '',
 
-        medicine_given: '',
-        action_taken: '',
+        medicine_given: checkup.medicine_given || '',
+        action_taken: checkup.action_taken || '',
 
-        notes: '',
+        notes: checkup.notes || '',
     });
 
     // Filter residents based on search query
@@ -33,22 +33,22 @@ export default function Create({ residents }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route('checkups.store'));
+        put(route('checkups.update', checkup.id));
     };
 
     return (
         <>
-            <Head title="Record Checkup" />
+            <Head title="Edit Checkup" />
 
             <div className="max-w-5xl mx-auto p-6">
                 <div className="bg-white shadow-md rounded-xl p-8 border border-gray-100">
-
+                    
                     <div className="mb-8 border-b pb-4">
                         <h1 className="text-3xl font-bold text-gray-800">
-                            Record Checkup
+                            Edit Checkup
                         </h1>
                         <p className="text-gray-500 mt-1">
-                            Record new resident consultation and health assessment.
+                            Update resident consultation and health assessment records.
                         </p>
                     </div>
 
@@ -61,7 +61,7 @@ export default function Create({ residents }) {
                                 <label className="block font-semibold text-gray-700">
                                     Resident
                                 </label>
-
+                                
                                 {/* Search Input */}
                                 <div className="relative">
                                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -72,7 +72,7 @@ export default function Create({ residents }) {
                                     <input
                                         type="text"
                                         placeholder="Search resident name..."
-                                        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all shadow-sm"
+                                        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all shadow-sm"
                                         value={searchQuery}
                                         onChange={(e) => setSearchQuery(e.target.value)}
                                     />
@@ -82,7 +82,7 @@ export default function Create({ residents }) {
                                 <select
                                     value={data.resident_id}
                                     onChange={(e) => setData('resident_id', e.target.value)}
-                                    className={`w-full border rounded-lg p-3 bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all shadow-sm ${errors.resident_id ? 'border-red-500 focus:ring-red-500' : 'border-gray-300'}`}
+                                    className="w-full border border-gray-300 rounded-lg p-3 bg-gray-50 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all shadow-sm"
                                 >
                                     <option value="">Select Resident</option>
                                     {filteredResidents.length > 0 ? (
@@ -95,11 +95,6 @@ export default function Create({ residents }) {
                                         <option value="" disabled>No residents found</option>
                                     )}
                                 </select>
-                                {errors.resident_id && (
-                                    <div className="text-red-500 text-sm mt-1 font-medium">
-                                        {errors.resident_id}
-                                    </div>
-                                )}
                             </div>
 
                             {/* Checkup Date */}
@@ -111,13 +106,8 @@ export default function Create({ residents }) {
                                     type="date"
                                     value={data.checkup_date}
                                     onChange={(e) => setData('checkup_date', e.target.value)}
-                                    className={`w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all shadow-sm h-[calc(100%-2rem)] mt-2 ${errors.checkup_date ? 'border-red-500' : 'border-gray-300'}`}
+                                    className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all shadow-sm h-[calc(100%-2rem)] mt-2"
                                 />
-                                {errors.checkup_date && (
-                                    <div className="text-red-500 text-sm mt-1 font-medium">
-                                        {errors.checkup_date}
-                                    </div>
-                                )}
                             </div>
                         </div>
 
@@ -181,7 +171,7 @@ export default function Create({ residents }) {
                         {/* --- Consultation Details Section --- */}
                         <div className="space-y-6">
                             <h3 className="text-lg font-semibold text-gray-800">Consultation Details</h3>
-
+                            
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label className="block font-medium text-gray-700 mb-2">Reason for Visit</label>
@@ -189,7 +179,7 @@ export default function Create({ residents }) {
                                         rows="3"
                                         value={data.reason_for_visit}
                                         onChange={(e) => setData('reason_for_visit', e.target.value)}
-                                        className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm"
+                                        className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-green-500 focus:border-green-500 shadow-sm"
                                     />
                                 </div>
 
@@ -199,7 +189,7 @@ export default function Create({ residents }) {
                                         rows="3"
                                         value={data.assessment}
                                         onChange={(e) => setData('assessment', e.target.value)}
-                                        className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm"
+                                        className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-green-500 focus:border-green-500 shadow-sm"
                                     />
                                 </div>
 
@@ -209,7 +199,7 @@ export default function Create({ residents }) {
                                         rows="3"
                                         value={data.medicine_given}
                                         onChange={(e) => setData('medicine_given', e.target.value)}
-                                        className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm"
+                                        className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-green-500 focus:border-green-500 shadow-sm"
                                     />
                                 </div>
 
@@ -219,7 +209,7 @@ export default function Create({ residents }) {
                                         rows="3"
                                         value={data.action_taken}
                                         onChange={(e) => setData('action_taken', e.target.value)}
-                                        className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm"
+                                        className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-green-500 focus:border-green-500 shadow-sm"
                                     />
                                 </div>
                             </div>
@@ -230,7 +220,7 @@ export default function Create({ residents }) {
                                     rows="2"
                                     value={data.notes}
                                     onChange={(e) => setData('notes', e.target.value)}
-                                    className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm"
+                                    className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-green-500 focus:border-green-500 shadow-sm"
                                 />
                             </div>
                         </div>
@@ -248,12 +238,12 @@ export default function Create({ residents }) {
                                 type="submit"
                                 disabled={processing}
                                 className={`px-6 py-2.5 text-white font-medium rounded-lg transition-all shadow-sm ${
-                                    processing
-                                        ? 'bg-blue-400 cursor-not-allowed'
-                                        : 'bg-blue-600 hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
+                                    processing 
+                                    ? 'bg-green-400 cursor-not-allowed' 
+                                    : 'bg-green-600 hover:bg-green-700 focus:ring-2 focus:ring-green-500 focus:ring-offset-2'
                                 }`}
                             >
-                                {processing ? 'Saving...' : 'Save Checkup'}
+                                {processing ? 'Updating...' : 'Update Checkup'}
                             </button>
                         </div>
 

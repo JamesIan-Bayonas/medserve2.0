@@ -1,50 +1,150 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Checkup;
 use App\Models\Resident;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class CheckupController extends Controller
 {
     /**
-     * Show the form for creating a new patient checkup.
+     * Display all checkups.
      */
-    public function create()
+    public function index()
     {
-        // Fetch residents list so health workers can choose patients from a select dropdown
-        $residents = Resident::select('id', 'full_name', 'age', 'gender')->orderBy('full_name', 'asc')->get();
+        $checkups = Checkup::with('resident')
+            ->latest()
+            ->get();
 
-    return Inertia::render('Checkups/Create', [
-            'residents' => $residents
+        return Inertia::render('Checkups/Index', [
+            'checkups' => $checkups,
         ]);
     }
 
     /**
-     * Store a newly created checkup record in the database.
+     * Show create form.
+     */
+    public function create()
+    {
+        $residents = Resident::select(
+            'id',
+            'full_name',
+            'age',
+            'gender'
+        )
+        ->orderBy('full_name')
+        ->get();
+
+        return Inertia::render('Checkups/Create', [
+            'residents' => $residents,
+        ]);
+    }
+
+    /**
+     * Store new checkup.
      */
     public function store(Request $request)
     {
-        // 1. Strict validation mapping against your physical migrations structure
         $validated = $request->validate([
-            'resident_id'     => 'required|exists:residents,id',
-            'blood_pressure'  => 'required|string|max:20',
-            'temperature'     => 'required|numeric|min:30|max:45',
-            'heart_rate'      => 'nullable|integer',
-            'weight'          => 'nullable|numeric',
-            'height'          => 'nullable|numeric',
-            'symptoms'        => 'required|string',
-            'diagnosis'       => 'required|string',
-        ]); 
-        // Explicitly map the authenticated worker ID directly to the checkup data record
-        $validated['user_id'] = Auth::id(); 
+            'resident_id' => 'required|exists:residents,id',
+            'checkup_date' => 'required|date',
 
-        // Persist the model records explicitly
+            'blood_pressure' => 'nullable|string|max:20',
+            'temperature' => 'nullable|numeric',
+            'weight' => 'nullable|numeric',
+            'height' => 'nullable|numeric',
+
+            'reason_for_visit' => 'required|string',
+            'assessment' => 'nullable|string',
+
+            'medicine_given' => 'nullable|string',
+            'action_taken' => 'nullable|string',
+
+            'notes' => 'nullable|string',
+        ]);
+
         Checkup::create($validated);
 
-        // 3. Return back to a secure history table with a feedback toast session alert
-        return redirect()->route('dashboard')->with('success', 'Patient checkup recorded successfully!');
+        return redirect()
+            ->route('checkups.index')
+            ->with('success', 'Checkup recorded successfully.');
+    }
+
+    /**
+     * Show specific checkup.
+     */
+    public function show(Checkup $checkup)
+    {
+        $checkup->load('resident');
+
+        return Inertia::render('Checkups/Show', [
+            'checkup' => $checkup,
+        ]);
+    }
+
+    /**
+     * Show edit form.
+     */
+    public function edit(Checkup $checkup)
+    {
+        $checkup->load('resident');
+
+        $residents = Resident::select(
+            'id',
+            'full_name',
+            'age',
+            'gender'
+        )
+        ->orderBy('full_name')
+        ->get();
+
+        return Inertia::render('Checkups/Edit', [
+            'checkup' => $checkup,
+            'residents' => $residents,
+        ]);
+    }
+
+    /**
+     * Update checkup.
+     */
+    public function update(Request $request, Checkup $checkup)
+    {
+        $validated = $request->validate([
+            'resident_id' => 'required|exists:residents,id',
+            'checkup_date' => 'required|date',
+
+            'blood_pressure' => 'nullable|string|max:20',
+            'temperature' => 'nullable|numeric',
+            'weight' => 'nullable|numeric',
+            'height' => 'nullable|numeric',
+
+            'reason_for_visit' => 'required|string',
+            'assessment' => 'nullable|string',
+
+            'medicine_given' => 'nullable|string',
+            'action_taken' => 'nullable|string',
+
+            'notes' => 'nullable|string',
+        ]);
+
+        $checkup->update($validated);
+
+        return redirect()
+            ->route('checkups.index')
+            ->with('success', 'Checkup updated successfully.');
+    }
+
+    /**
+     * Delete checkup.
+     */
+    public function destroy(Checkup $checkup)
+    {
+        $checkup->delete();
+
+        return redirect()
+            ->route('checkups.index')
+            ->with('success', 'Checkup deleted successfully.');
     }
 }

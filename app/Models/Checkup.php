@@ -11,11 +11,20 @@ class Checkup extends Model
 
     protected $fillable = [
         'resident_id',
-        // TODO: Add other columns based on what you need to track for a checkup
-        // 'blood_pressure',
-        // 'temperature',
-        // 'weight',
-        // 'notes',
+        'checkup_date',
+
+        'blood_pressure',
+        'temperature',
+        'weight',
+        'height',
+
+        'reason_for_visit',
+        'assessment',
+
+        'medicine_given',
+        'action_taken',
+
+        'notes',
     ];
 
     public function resident()
