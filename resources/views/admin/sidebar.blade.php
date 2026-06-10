@@ -10,13 +10,15 @@
     </a>
 </li>
 
-        <li class="nav-item mb-2">
-            <a href="#" class="nav-link text-white">Residents</a>
-        </li>
+<a href="/residents" class="nav-link text-white">
+    Residents
+</a>
 
-        <li class="nav-item mb-2">
-            <a href="#" class="nav-link text-white">Checkups</a>
-        </li>
+<li class="nav-item mb-2">
+    <a href="{{ route('checkups.index') }}" class="nav-link text-white">
+        Checkups
+    </a>
+</li>
 
         <li class="nav-item mb-2">
             <a href="#" class="nav-link text-white">Immunization</a>

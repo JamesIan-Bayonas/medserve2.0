@@ -75,12 +75,28 @@ export default function Dashboard({
                                 >
                                     <Users size={18} /> Residents List
                                 </Link>
-                                <a 
-                                    href="#" 
-                                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50 transition"
+
+                                {/* Checkups Management */}
+                            <div>
+                                <p className="text-[11px] uppercase tracking-[1px] text-gray-400 font-semibold mb-3 px-2">
+                                    Checkups
+                                </p>
+
+                                <Link
+                                    href="/checkups"
+                                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50"
                                 >
-                                    <CalendarDays size={18} /> Visit History
-                                </a>
+                                    <CalendarDays size={18} />
+                                    Checkup Records
+                                </Link>
+                            </div>
+                              <Link
+                                    href="/checkups"
+                                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50"
+                                >
+                                    <CalendarDays size={18} />
+                                    Checkup Records
+                                </Link>
                             </div>
 
                             {/* Medicine Management */}

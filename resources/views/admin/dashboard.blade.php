@@ -660,10 +660,10 @@ color:#1e3a5f;
                 Residents
             </a>
 
-            <a href="#">
-                <i class="fa fa-notes-medical"></i>
-                Checkups
-            </a>
+<a href="{{ route('checkups.index') }}">
+    <i class="fa fa-notes-medical"></i>
+    Checkups
+</a>
 
             <a href="#">
                 <i class="fa fa-syringe"></i>
