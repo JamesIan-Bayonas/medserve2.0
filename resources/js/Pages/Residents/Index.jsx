@@ -6,7 +6,7 @@ export default function Index({ residents = [] }) {
     const { delete: destroy } = useForm();
 
     const destroyResident = (id) => {
-        if (confirm("Sigurado ka nga gusto nimo i-delete kini nga resident?")) {
+        if (confirm("Are you sure you want to delete this resident?")) {
             destroy(`/residents/${id}`);
         }
     };
@@ -16,7 +16,6 @@ export default function Index({ residents = [] }) {
     );
 
     return (
-
         <div className="min-h-screen bg-[#f8fafc] p-6 md:p-8 font-sans antialiased">
             
             {/* Upper Header Section */}
@@ -41,14 +40,12 @@ export default function Index({ residents = [] }) {
                 </Link>
             </div>
 
-
             <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
                 
-
                 <div className="p-5 border-b border-slate-100 bg-white">
                     <div className="relative w-full max-w-md">
                         <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
-                            <svg xmlns="http://www.w3.org/http://www.w3.org/http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                             </svg>
                         </span>
@@ -131,8 +128,8 @@ export default function Index({ residents = [] }) {
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan="7" className="px-6 py-12 text-center text-slate-400">
-                                  
+                                    <td colSpan="7" className="px-6 py-12 text-center text-slate-400 font-medium">
+                                        No residents found.
                                     </td>
                                 </tr>
                             )}

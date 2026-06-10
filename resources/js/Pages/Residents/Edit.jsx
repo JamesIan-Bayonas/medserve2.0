@@ -9,17 +9,42 @@ export default function Edit({ resident }) {
         gender: resident.gender || '',
         address: resident.address || '',
         contact_number: resident.contact_number || '',
+        guardian_name: resident.guardian_name || '',
         emergency_contact_name: resident.emergency_contact_name || '',
         emergency_contact_relationship: resident.emergency_contact_relationship || '',
         emergency_contact_number: resident.emergency_contact_number || '',
         allergies: resident.allergies || '',
     });
 
+    const isMinor = data.age !== '' && data.age < 18;
+    const isAdult = data.age !== '' && data.age >= 18;
+
     const submit = (e) => {
         e.preventDefault();
-        put(`/residents/${resident.id}`);
+        
+        // Limpyohan ang fields nga dili kinahanglan sa database sa dili pa i-save
+        let updatedData = { ...data };
+        if (isMinor) {
+            updatedData.emergency_contact_name = '';
+            updatedData.emergency_contact_relationship = '';
+            updatedData.emergency_contact_number = '';
+        } else if (isAdult) {
+            updatedData.guardian_name = '';
+        }
+
+        put(`/residents/${resident.id}`, {
+            data: updatedData
+        });
     };
 
+    const category =
+        data.age < 18
+            ? 'Child'
+            : data.age >= 60
+            ? 'Senior Citizen'
+            : data.age
+            ? 'Adult'
+            : '';
 
     const inputStyle = "mt-1 block w-full rounded-xl border border-slate-300 px-4 py-2.5 text-slate-900 focus:border-[#243c5a] focus:outline-none focus:ring-1 focus:ring-[#243c5a] sm:text-sm transition-colors bg-slate-50 focus:bg-white";
     const labelStyle = "block text-sm font-semibold text-slate-700";
@@ -98,6 +123,16 @@ export default function Edit({ resident }) {
                                 />
                             </div>
 
+                            <div>
+                                <label className={labelStyle}>Resident Category</label>
+                                <input
+                                    type="text"
+                                    value={category}
+                                    readOnly
+                                    className="mt-1 block w-full rounded-xl border border-slate-200 px-4 py-2.5 text-slate-500 bg-slate-100 sm:text-sm cursor-not-allowed"
+                                />
+                            </div>
+
                             {/* Gender & Contact Number */}
                             <div>
                                 <label className={labelStyle}>Gender</label>
@@ -114,7 +149,9 @@ export default function Edit({ resident }) {
                             </div>
 
                             <div>
-                                <label className={labelStyle}>Contact Number</label>
+                                <label className={labelStyle}>
+                                    {isMinor ? "Guardian Contact Number" : "Contact Number"}
+                                </label>
                                 <input
                                     type="text"
                                     value={data.contact_number}
@@ -123,6 +160,27 @@ export default function Edit({ resident }) {
                                 />
                                 {errors?.contact_number && <p className="mt-1 text-xs text-red-500 font-medium">{errors.contact_number}</p>}
                             </div>
+
+                            {/* Guardian Name - Ipakita ra kung Minor */}
+                            {isMinor && (
+                                <div className="md:col-span-2">
+                                    <label className={labelStyle}>
+                                        Guardian Name (Required for Minors)
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={data.guardian_name}
+                                        onChange={(e) => setData('guardian_name', e.target.value)}
+                                        className={inputStyle}
+                                        placeholder="Parent or Guardian Name"
+                                    />
+                                    {errors?.guardian_name && (
+                                        <p className="mt-1 text-xs text-red-500 font-medium">
+                                            {errors.guardian_name}
+                                        </p>
+                                    )}
+                                </div>
+                            )}
 
                             {/* Address */}
                             <div className="md:col-span-2">
@@ -138,44 +196,49 @@ export default function Edit({ resident }) {
                         </div>
                     </div>
 
-                    {/* --- Emergency Contact Section --- */}
-                    <div>
-                        <h2 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 border-b border-slate-100 pb-2">
-                            Emergency Contact
-                        </h2>
-                        
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-red-50/30 p-5 rounded-xl border border-red-50">
-                            <div className="md:col-span-2">
-                                <label className={labelStyle}>Emergency Contact Name</label>
-                                <input
-                                    type="text"
-                                    value={data.emergency_contact_name}
-                                    onChange={(e) => setData('emergency_contact_name', e.target.value)}
-                                    className={inputStyle}
-                                />
-                            </div>
+                    {/* --- Emergency Contact Section - Ipakita ra kung Adult/Senior --- */}
+                    {isAdult && (
+                        <div>
+                            <h2 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 border-b border-slate-100 pb-2">
+                                Emergency Contact
+                            </h2>
+                            
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-red-50/30 p-5 rounded-xl border border-red-50">
+                                <div className="md:col-span-2">
+                                    <label className={labelStyle}>Emergency Contact Name</label>
+                                    <input
+                                        type="text"
+                                        value={data.emergency_contact_name}
+                                        onChange={(e) => setData('emergency_contact_name', e.target.value)}
+                                        className={inputStyle}
+                                    />
+                                    {errors?.emergency_contact_name && <p className="mt-1 text-xs text-red-500 font-medium">{errors.emergency_contact_name}</p>}
+                                </div>
 
-                            <div>
-                                <label className={labelStyle}>Relationship</label>
-                                <input
-                                    type="text"
-                                    value={data.emergency_contact_relationship}
-                                    onChange={(e) => setData('emergency_contact_relationship', e.target.value)}
-                                    className={inputStyle}
-                                />
-                            </div>
+                                <div>
+                                    <label className={labelStyle}>Relationship</label>
+                                    <input
+                                        type="text"
+                                        value={data.emergency_contact_relationship}
+                                        onChange={(e) => setData('emergency_contact_relationship', e.target.value)}
+                                        className={inputStyle}
+                                    />
+                                    {errors?.emergency_contact_relationship && <p className="mt-1 text-xs text-red-500 font-medium">{errors.emergency_contact_relationship}</p>}
+                                </div>
 
-                            <div>
-                                <label className={labelStyle}>Contact Number</label>
-                                <input
-                                    type="text"
-                                    value={data.emergency_contact_number}
-                                    onChange={(e) => setData('emergency_contact_number', e.target.value)}
-                                    className={inputStyle}
-                                />
+                                <div>
+                                    <label className={labelStyle}>Contact Number</label>
+                                    <input
+                                        type="text"
+                                        value={data.emergency_contact_number}
+                                        onChange={(e) => setData('emergency_contact_number', e.target.value)}
+                                        className={inputStyle}
+                                    />
+                                    {errors?.emergency_contact_number && <p className="mt-1 text-xs text-red-500 font-medium">{errors.emergency_contact_number}</p>}
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    )}
 
                     {/* --- Health Information Section --- */}
                     <div>
@@ -187,16 +250,17 @@ export default function Edit({ resident }) {
                             <label className={labelStyle}>Known Allergies</label>
                             <textarea
                                 value={data.allergies}
+                                placeholder="List any known allergies here. Leave blank if none."
                                 onChange={(e) => setData('allergies', e.target.value)}
                                 rows="3"
                                 className={`${inputStyle} resize-none`}
                             />
+                            {errors?.allergies && <p className="mt-1 text-xs text-red-500 font-medium">{errors.allergies}</p>}
                         </div>
                     </div>
 
                     {/* --- Action Buttons --- */}
                     <div className="flex items-center justify-end gap-3 pt-6 border-t border-slate-100">
-                 
                         <Link
                             href="/residents"
                             className="px-5 py-2.5 text-sm font-medium text-slate-600 bg-white border border-slate-300 rounded-xl hover:bg-slate-50 transition-colors shadow-sm"
@@ -204,7 +268,6 @@ export default function Edit({ resident }) {
                             Cancel
                         </Link>
                         
-                        {/* Update Button */}
                         <button
                             type="submit"
                             disabled={processing}

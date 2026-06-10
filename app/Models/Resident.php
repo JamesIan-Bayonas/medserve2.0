@@ -16,11 +16,10 @@ class Resident extends Model
         'gender',
         'address',
         'contact_number',
-
+        'guardian_name',
         'emergency_contact_name',
         'emergency_contact_relationship',
         'emergency_contact_number',
-
         'allergies',
     ];
 

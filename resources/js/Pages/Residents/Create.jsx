@@ -8,6 +8,7 @@ export default function Create() {
         gender: '',
         address: '',
         contact_number: '',
+        guardian_name: '',
         emergency_contact_name: '',
         emergency_contact_relationship: '',
         emergency_contact_number: '',
@@ -19,6 +20,17 @@ export default function Create() {
         post('/residents');
     };
 
+    // Helper conditions para sayon basahon
+    const isMinor = data.age !== '' && Number(data.age) < 18;
+    const isAdult = data.age !== '' && Number(data.age) >= 18;
+
+    const category = isMinor
+        ? 'Child'
+        : Number(data.age) >= 60
+        ? 'Senior Citizen'
+        : isAdult
+        ? 'Adult'
+        : '';
 
     const inputStyle = "mt-1 block w-full rounded-xl border border-slate-300 px-4 py-2.5 text-slate-900 focus:border-[#243c5a] focus:outline-none focus:ring-1 focus:ring-[#243c5a] sm:text-sm transition-colors bg-slate-50 focus:bg-white";
     const labelStyle = "block text-sm font-semibold text-slate-700";
@@ -45,7 +57,7 @@ export default function Create() {
                         </h2>
                         
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            {/* Full Name - Takes up 2 columns on desktop */}
+                            {/* Full Name */}
                             <div className="md:col-span-2">
                                 <label className={labelStyle}>Full Name</label>
                                 <input
@@ -58,7 +70,7 @@ export default function Create() {
                                 {errors.full_name && <p className="mt-1 text-xs text-red-500 font-medium">{errors.full_name}</p>}
                             </div>
 
-                      
+                            {/* Date of Birth */}
                             <div>
                                 <label className={labelStyle}>Date of Birth</label>
                                 <input
@@ -86,18 +98,29 @@ export default function Create() {
                                 {errors.date_of_birth && <p className="mt-1 text-xs text-red-500 font-medium">{errors.date_of_birth}</p>}
                             </div>
 
+                            {/* Age */}
                             <div>
                                 <label className={labelStyle}>Age</label>
                                 <input
                                     type="number"
                                     value={data.age}
                                     readOnly
-
                                     className="mt-1 block w-full rounded-xl border border-slate-200 px-4 py-2.5 text-slate-500 bg-slate-100 sm:text-sm cursor-not-allowed"
                                 />
                             </div>
 
+                            {/* Resident Category */}
+                            <div>
+                                <label className={labelStyle}>Resident Category</label>
+                                <input
+                                    type="text"
+                                    value={category}
+                                    readOnly
+                                    className="mt-1 block w-full rounded-xl border border-slate-200 px-4 py-2.5 text-slate-500 bg-slate-100 sm:text-sm cursor-not-allowed"
+                                />
+                            </div>
                          
+                            {/* Gender */}
                             <div>
                                 <label className={labelStyle}>Gender</label>
                                 <select
@@ -112,8 +135,24 @@ export default function Create() {
                                 {errors.gender && <p className="mt-1 text-xs text-red-500 font-medium">{errors.gender}</p>}
                             </div>
 
+                            {/* Complete Address */}
                             <div>
-                                <label className={labelStyle}>Contact Number</label>
+                                <label className={labelStyle}>Complete Address</label>
+                                <input
+                                    type="text"
+                                    placeholder="e.g. Purok 1, Poblacion"
+                                    value={data.address}
+                                    onChange={(e) => setData('address', e.target.value)}
+                                    className={inputStyle}
+                                />
+                                {errors.address && <p className="mt-1 text-xs text-red-500 font-medium">{errors.address}</p>}
+                            </div>
+
+                            {/* Contact Number (Dynamic Label: Guardian's if Minor, Personal if Adult) */}
+                            <div className="md:col-span-2">
+                                <label className={labelStyle}>
+                                    {isMinor ? 'Guardian Contact Number' : 'Contact Number'}
+                                </label>
                                 <input
                                     type="text"
                                     placeholder="e.g. 09123456789"
@@ -124,61 +163,67 @@ export default function Create() {
                                 {errors.contact_number && <p className="mt-1 text-xs text-red-500 font-medium">{errors.contact_number}</p>}
                             </div>
 
-                            {/* Address - Takes up 2 columns */}
-                            <div className="md:col-span-2">
-                                <label className={labelStyle}>Complete Address</label>
-                                <input
-                                    type="text"
-                                    placeholder="House No., Street, Purok..."
-                                    value={data.address}
-                                    onChange={(e) => setData('address', e.target.value)}
-                                    className={inputStyle}
-                                />
-                                {errors.address && <p className="mt-1 text-xs text-red-500 font-medium">{errors.address}</p>}
-                            </div>
+                            {/* Guardian Name (Only shows if Child) */}
+                            {isMinor && (
+                                <div className="md:col-span-2">
+                                    <label className={labelStyle}>Guardian Name (Required)</label>
+                                    <input
+                                        type="text"
+                                        placeholder="Full Name of Parent or Guardian"
+                                        value={data.guardian_name}
+                                        onChange={(e) => setData('guardian_name', e.target.value)}
+                                        className={inputStyle}
+                                    />
+                                    {errors.guardian_name && <p className="mt-1 text-xs text-red-500 font-medium">{errors.guardian_name}</p>}
+                                </div>
+                            )}
                         </div>
                     </div>
 
-                    {/* --- Emergency Contact Section --- */}
-                    <div>
-                        <h2 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 border-b border-slate-100 pb-2">
-                            Emergency Contact
-                        </h2>
-                        
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-red-50/30 p-5 rounded-xl border border-red-50">
-                            <div className="md:col-span-2">
-                                <label className={labelStyle}>Emergency Contact Name</label>
-                                <input
-                                    type="text"
-                                    value={data.emergency_contact_name}
-                                    onChange={(e) => setData('emergency_contact_name', e.target.value)}
-                                    className={inputStyle}
-                                />
-                            </div>
+                    {/* --- Emergency Contact Section (Only shows if Adult/Senior) --- */}
+                    {isAdult && (
+                        <div>
+                            <h2 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 border-b border-slate-100 pb-2">
+                                Emergency Contact
+                            </h2>
 
-                            <div>
-                                <label className={labelStyle}>Relationship</label>
-                                <input
-                                    type="text"
-                                    placeholder="e.g. Mother, Spouse"
-                                    value={data.emergency_contact_relationship}
-                                    onChange={(e) => setData('emergency_contact_relationship', e.target.value)}
-                                    className={inputStyle}
-                                />
-                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-red-50/30 p-5 rounded-xl border border-red-50">
+                                <div className="md:col-span-2">
+                                    <label className={labelStyle}>Emergency Contact Name</label>
+                                    <input
+                                        type="text"
+                                        placeholder="Name of contact person"
+                                        value={data.emergency_contact_name}
+                                        onChange={(e) => setData('emergency_contact_name', e.target.value)}
+                                        className={inputStyle}
+                                    />
+                                </div>
 
-                            <div>
-                                <label className={labelStyle}>Contact Number</label>
-                                <input
-                                    type="text"
-                                    value={data.emergency_contact_number}
-                                    onChange={(e) => setData('emergency_contact_number', e.target.value)}
-                                    className={inputStyle}
-                                />
-                                {errors.emergency_contact_number && <p className="mt-1 text-xs text-red-500 font-medium">{errors.emergency_contact_number}</p>}
+                                <div>
+                                    <label className={labelStyle}>Relationship</label>
+                                    <input
+                                        type="text"
+                                        placeholder="e.g. Mother, Spouse"
+                                        value={data.emergency_contact_relationship}
+                                        onChange={(e) => setData('emergency_contact_relationship', e.target.value)}
+                                        className={inputStyle}
+                                    />
+                                </div>
+
+                                <div>
+                                    <label className={labelStyle}>Contact Number</label>
+                                    <input
+                                        type="text"
+                                        placeholder="e.g. 09123456789"
+                                        value={data.emergency_contact_number}
+                                        onChange={(e) => setData('emergency_contact_number', e.target.value)}
+                                        className={inputStyle}
+                                    />
+                                    {errors.emergency_contact_number && <p className="mt-1 text-xs text-red-500 font-medium">{errors.emergency_contact_number}</p>}
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    )}
 
                     {/* --- Health Information Section --- */}
                     <div>

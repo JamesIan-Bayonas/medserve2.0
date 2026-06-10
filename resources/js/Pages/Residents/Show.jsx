@@ -1,8 +1,16 @@
 import { Link } from "@inertiajs/react";
 
 export default function Show({ resident }) {
+    const isMinor = resident.age < 18;
+    const isAdult = resident.age >= 18;
+
+    const category = isMinor
+        ? 'Child'
+        : resident.age >= 60
+        ? 'Senior Citizen'
+        : 'Adult';
+
     return (
-    
         <div className="min-h-screen bg-[#f8fafc] p-6 md:p-8 font-sans antialiased">
             
             {/* Header Area with Back Button */}
@@ -79,36 +87,58 @@ export default function Show({ resident }) {
                                 <span className="text-sm font-medium text-slate-800">{resident.age} years old</span>
                             </div>
                             <div className="flex flex-col">
-                                <span className="text-xs text-slate-500 mb-1">Contact Number</span>
-                                <span className="text-sm font-medium text-slate-800">{resident.contact_number || "N/A"}</span>
+                                <span className="text-xs text-slate-500 mb-1">Resident Category</span>
+                                <span className="text-sm font-medium text-slate-800">{category}</span>
                             </div>
+                            
+                            <div className="flex flex-col">
+                                <span className="text-xs text-slate-500 mb-1">
+                                    {isMinor ? "Guardian Contact Number" : "Contact Number"}
+                                </span>
+                                <span className="text-sm font-medium text-slate-800">
+                                    {resident.contact_number || "N/A"}
+                                </span>
+                            </div>
+
+                            {/* Guardian Name: Show only if minor */}
+                            {isMinor && (
+                                <div className="flex flex-col">
+                                    <span className="text-xs text-slate-500 mb-1">Guardian Name</span>
+                                    <span className="text-sm font-medium text-slate-800">
+                                        {resident.guardian_name || "N/A"}
+                                    </span>
+                                </div>
+                            )}
+
                             <div className="flex flex-col md:col-span-2 lg:col-span-3">
                                 <span className="text-xs text-slate-500 mb-1">Home Address</span>
-                                <span className="text-sm font-medium text-slate-800">{resident.address}</span>
+                                <span className="text-sm font-medium text-slate-800">{resident.address || "N/A"}</span>
                             </div>
                         </div>
                     </div>
 
-                    {/* Section 2: Emergency Contact */}
-                    <div>
-                        <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 border-b border-slate-100 pb-2">
-                            Emergency Contact
-                        </h3>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4 bg-red-50/50 rounded-xl border border-red-100">
-                            <div className="flex flex-col">
-                                <span className="text-xs text-slate-500 mb-1">Contact Name</span>
-                                <span className="text-sm font-medium text-slate-800">{resident.emergency_contact_name || "N/A"}</span>
-                            </div>
-                            <div className="flex flex-col">
-                                <span className="text-xs text-slate-500 mb-1">Relationship</span>
-                                <span className="text-sm font-medium text-slate-800">{resident.emergency_contact_relationship || "N/A"}</span>
-                            </div>
-                            <div className="flex flex-col">
-                                <span className="text-xs text-slate-500 mb-1">Contact Number</span>
-                                <span className="text-sm font-medium text-slate-800">{resident.emergency_contact_number || "N/A"}</span>
+                    {/* Section 2: Emergency Contact (Shows ONLY if Adult/Senior) */}
+                    {isAdult && (
+                        <div>
+                            <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 border-b border-slate-100 pb-2">
+                                Emergency Contact
+                            </h3>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4 bg-red-50/50 rounded-xl border border-red-100">
+                                <div className="flex flex-col">
+                                    <span className="text-xs text-slate-500 mb-1">Contact Name</span>
+                                    <span className="text-sm font-medium text-slate-800">{resident.emergency_contact_name || "N/A"}</span>
+                                </div>
+                                <div className="flex flex-col">
+                                    <span className="text-xs text-slate-500 mb-1">Relationship</span>
+                                    <span className="text-sm font-medium text-slate-800">{resident.emergency_contact_relationship || "N/A"}</span>
+                                </div>
+                                <div className="flex flex-col">
+                                    <span className="text-xs text-slate-500 mb-1">Contact Number</span>
+                                    <span className="text-sm font-medium text-slate-800">{resident.emergency_contact_number || "N/A"}</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    )}
 
                     {/* Section 3: Health Information */}
                     <div>
